@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="UTF-8" />
+  <title>Physics-IQ Benchmark: Do generative video models understand physical&nbsp;principles?</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Physics-IQ Benchmark" />
+  <meta property="og:description" content="Do generative video models learn physical principles?" />
+<meta property="og:image" content="https://physics-iq.github.io/assets/prev.png" />
+  <meta property="og:url" content="https://physics-iq.github.io/" />
+  <meta property="og:type" content="website" />
+
+
+  <!-- Use your custom duck favicon -->
+  <link rel="icon" type="image/png" href="assets/duckie.png" />
+
+  <style>
+    /* Reset default margins/padding */
+    html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%; 
+}
+.affiliations span {
+    display: inline; /* Ensure no additional spacing is introduced */
+    margin: 0;
+    padding: 0;
+  }
+body {
+  min-height: 100vh;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #333;
+  text-align: center;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #fff; /* Plain white background */
+}
+
+  .blue { color: #4285F4; } /* Blue */
+  .red { color: #EA4335; }  /* Red */
+  .yellow { color: #FBBC05; } /* Yellow */
+  .green { color: #34A853; } /* Green */
+
+ .gif-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gif-header {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* Equal column distribution */
+  width: 100%;
+  text-align: center;
+  margin-bottom: 5px; /* Reduce gap between header and GIFs */
+  font-weight: bold;
+  font-size: 10px; /* Adjust header text size to fit */
+}
+
+.gif-column-header {
+  padding: 0; /* Remove extra padding around text */
+  margin: 0; /* Eliminate extra margins around header */
+}
+
+.gif-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* Ensure GIFs align with headers */
+  gap: 5px; /* Maintain small gaps between GIFs */
+}
+
+.gif-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.gif-cell img {
+  width: 100%;
+  max-width: 180px; /* Adjust GIF size if needed */
+  height: auto;
+  margin-bottom: 2px; /* Small margin between stacked GIFs */
+}
+
+
+
+
+
+.content-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+  background: #fff; /* Change to white */
+  min-height: 100vh; 
+  position: relative; 
+  z-index: 1; 
+  box-sizing: border-box;
+}
+    .pdf-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers the content horizontally */
+    justify-content: center; /* Centers the content vertically */
+    margin: 2rem auto;
+  }
+
+  .pdf-container img {
+    max-width: 60%; /* Ensures the image is responsive */
+    height: auto; /* Maintains aspect ratio */
+    border-radius: 8px; /* Adds rounded corners (optional) */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow (optional) */
+  }
+
+  .pdf-caption {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: #555;
+    text-align: center;
+  }
+
+
+
+    .teaser-container {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    video {
+      width: 100%;
+      height: auto;
+      border-radius: 0.75rem; 
+    }
+
+    header {
+      padding: 1.5rem 1rem;
+      margin-bottom: 1rem;
+    }
+    h1 {
+      font-size: 2rem;
+      margin: 0 0 0.5rem;
+      line-height: 1.2;
+    }
+    .authors {
+      font-size: 1rem;
+      color: #555;
+      margin-top: 0.5rem;
+    }
+    .affiliations {
+      font-size: 0.9rem;
+      color: #666;
+      margin-top: 0.5rem;
+    }
+    .asterisk-note {
+      font-style: italic;
+      font-size: 0.9rem;
+      color: #666;
+      display: block;
+      margin-top: 0.5rem;
+    }
+
+    .buttons {
+      margin: 1.5rem auto;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .btn-link {
+      display: inline-flex;
+      align-items: center;
+      background: #000;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 9999px;
+      padding: 0.5rem 1rem;
+      transition: background 0.2s ease-in-out;
+      font-weight: 500;
+      border: none;
+    }
+    .btn-link:hover {
+      background: #333;
+    }
+    .logo {
+      width: 20px;
+      height: auto;
+      margin-right: 0.5rem;
+      filter: invert(1);
+    }
+    .logo-original {
+      filter: none !important;
+    }
+    .logo-bigger {
+      width: 24px !important;
+    }
+
+    .section-wrapper {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      text-align: left;
+    }
+    .section-wrapper h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    .section-wrapper p {
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .leaderboard {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      text-align: center;
+    }
+    .leaderboard-table {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      border-collapse: collapse;
+    }
+    .leaderboard-table th,
+    .leaderboard-table td {
+      padding: 0.75rem;
+      border-bottom: 1px solid #ddd;
+    }
+    .leaderboard-table th {
+      background: #f2eee8;
+      font-weight: 600;
+    }
+    .leaderboard-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* 
+       Updated repeating pattern to 10% chunks, e.g. 
+       10% shading + 10% gap => each chunk is 20% wide,
+       or do 10% shading, 10% gap => total 20% repeating length.
+
+       We'll just do 10% shading and 10% gap for a clearer chunk.
+       Also, we can saturate the shading color more (a darker gray).
+    */
+     /* Progress bar styles */
+.progress {
+  background-color: #e0e0e0; /* Light gray for background */
+  border-radius: 5px;
+  height: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  border-radius: 5px;
+  text-align: center;
+  color: white; /* Text color inside the filled portion */
+  font-size: 12px;
+  line-height: 20px;
+  position: relative;
+}
+
+.progress-label {
+  position: absolute;
+  top: 0;
+  right: 5px; /* Adjust to ensure the text stays within the unfilled area */
+  font-size: 12px;
+  color: black; /* Black text for the unfilled area */
+  line-height: 20px; /* Align vertically with the bar height */
+}
+
+
+
+
+
+    /* Carousel / Video Samples */
+    .video-samples {
+      max-width: 800px;
+      margin: 1rem auto;
+      position: relative;
+      overflow: hidden;
+    }
+  /* Container for all slides */
+.slide-container {
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Individual slide */
+  /* Updated slide styles for real video and two rows of generated videos */
+.slide {
+    display: grid;
+    grid-template-rows: auto auto auto; /* 3 rows: 1 for real, 2 for generated */
+    grid-template-columns: repeat(4, 1fr); /* 4 videos per row for generated */
+    gap: 1rem; /* Space between videos */
+    padding: 1rem;
+    box-sizing: border-box;
+    justify-items: center; /* Center items horizontally */
+    align-items: center; /* Center items vertically */
+    width: 100%;
+  }
+
+  .real-video {
+    grid-column: 1 / -1; /* Span all columns for the real video */
+    justify-self: center; /* Center the real video horizontally */
+  }
+.real-video img {
+  width: 660px; /* Fixed width */
+  height: 371px; /* Fixed height */
+  object-fit: cover; /* Ensures aspect ratio doesn't distort */
+  border-radius: 0.5rem; /* Optional: Rounded corners */
+}
+
+/* Individual video frame */
+.frame {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 200px; /* Adjust as needed for consistent size */
+}
+
+/* Style for video or GIF */
+.frame img {
+  width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+}
+
+/* Caption for videos */
+.caption {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+.podcast-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers items horizontally */
+  justify-content: center; /* Ensures vertical centering if needed */
+  text-align: center; /* Centers the text */
+}
+
+.podcast-center p {
+  margin: 0 0 1rem; /* Add spacing below the text */
+}
+
+.podcast-center audio {
+  margin-top: 1rem; /* Add spacing above the audio player */
+}
+
+
+    .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.5);
+      color: #fff;
+      padding: 0.75rem;
+      cursor: pointer;
+      border-radius: 9999px;
+      user-select: none;
+      font-size: 1.25rem;
+      line-height: 1.25rem;
+      z-index: 10;
+    }
+    .arrow:hover {
+      background: rgba(0, 0, 0, 0.7);
+    }
+    .arrow-left {
+      left: 30px;
+    }
+    .arrow-right {
+      right: 30px;
+    }
+
+    footer {
+      margin: 2rem 0;
+      color: #999;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="content-wrapper">
+    <!-- Teaser Video at the Top -->
+    <div class="teaser-container">
+      <video src="assets/teaser.mp4" controls autoplay loop muted></video>
+    </div>
+
+    <header>
+      <h1>Physics IQ Benchmark:<br>Do generative video models understand physical&nbsp;principles?</h1>
+      <div class="authors">
+          <a href="https://sam-motamed.github.io/" target="_blank">Saman Motamed</a><sup>1,*</sup>, 
+          <a href="https://scholar.google.com/citations?user=vEZUEOQAAAAJ&hl=en" target="_blank">Laura Culp</a><sup>2</sup>, 
+          <a href="https://scholar.google.com/citations?user=IrixA8MAAAAJ&hl=en" target="_blank">Kevin Swersky</a><sup>2</sup>, 
+          <a href="https://priyankjaini.github.io/" target="_blank">Priyank Jaini</a><sup>2,†</sup>, 
+          <a href="https://robertgeirhos.com/" target="_blank">Robert Geirhos</a><sup>2,†</sup>
+      </div>
+<div class="affiliations">
+  <strong>1:</strong> INSAIT, Sofia University &nbsp;&nbsp;
+  <strong>2:</strong> 
+  <span class="blue">G</span><span class="red">o</span><span class="yellow">o</span><span class="blue">g</span><span class="green">l</span><span class="red">e</span>
+  <span class="blue">D</span><span class="blue">e</span><span class="blue">e</span><span class="blue">p</span><span class="blue">M</span><span class="blue">i</span><span class="blue">n</span><span class="blue">d</span>
+</div>
+
+      <div class="asterisk-note">
+          * Work done while at Google DeepMind.<br>
+          † Joint last authors.
+      </div>
+
+
+    </header>
+
+<!-- Buttons -->
+<div class="buttons">
+  <a class="btn-link" href="https://arxiv.org/abs/2501.09038" target="_blank">
+    <img src="assets/arxiv.jpg" alt="arXiv Logo" class="logo logo-original">Paper
+  </a>
+  <a class="btn-link" href="https://arxiv.org/pdf/2501.09038" target="_blank">
+    PDF 📃
+  </a>
+  <a class="btn-link" href="https://github.com/google-deepmind/physics-IQ-benchmark" target="_blank">
+    <img src="assets/github-logo.png" alt="GitHub Logo" class="logo logo-bigger">Code
+  </a>
+  <a class="btn-link" href="https://physics-iq.github.io/workshop/physics-iq-challenge.html" target="_blank">
+    ICCV 25 Challenge 🧠
+  </a>
+  <a class="btn-link" href="#podcast-section">
+    Podcast 📻
+  </a>
+</div>
+
+
+
+    <!-- TL;DR -->
+    <div class="section-wrapper">
+      <h2>TL;DR</h2>
+      <p>
+        We develop the <strong>Physics-IQ benchmark and score</strong>, which reveals that current generative video models lack physical understanding despite sometimes achieving visual realism. 
+        Use our benchmark and dataset to assess your video model's physics understanding! 
+      </p>
+    </div>
+
+
+
+<div class="gif-container">
+  <div class="gif-grid">
+    <div class="gif-cell">
+      <p>Solid mechanics</p>
+      <img src="../assets/r11.gif" alt="GIF r11">
+      <img src="../assets/r21.gif" alt="GIF r21">
+    </div>
+    <div class="gif-cell">
+      <p>Fluid dynamics</p>
+      <img src="../assets/r12.gif" alt="GIF r12">
+      <img src="../assets/r22.gif" alt="GIF r22">
+    </div>
+    <div class="gif-cell">
+      <p>Optics</p>
+      <img src="../assets/r13.gif" alt="GIF r13">
+      <img src="../assets/r23.gif" alt="GIF r23">
+    </div>
+    <div class="gif-cell">
+      <p>Thermodynamics</p>
+      <img src="../assets/r14.gif" alt="GIF r14">
+      <img src="../assets/r24.gif" alt="GIF r24">
+    </div>
+    <div class="gif-cell">
+      <p>Magnetism</p>
+      <img src="../assets/r15.gif" alt="GIF r15">
+      <img src="../assets/r25.gif" alt="GIF r25">
+    </div>
+  </div>
+  <p>Our benchmark tests the physics understanding of generative video models across 5 categories. </p>
+</div>
+
+
+    <!-- Abstract -->
+    <div class="section-wrapper">
+      <h2>Abstract 📣</h2>
+      <p>
+        AI video generation is undergoing a revolution, with quality and realism advancing rapidly.
+        These advances have led to a passionate scientific debate: Do video models learn “world models”
+        that discover laws of physics — or, alternatively, are they merely sophisticated pixel predictors
+        that achieve visual realism without understanding the physical principles of reality?
+      </p>
+      <p>
+        We address this question by developing <strong>Physics-IQ</strong>, a comprehensive benchmark
+        dataset that can only be solved by acquiring a deep understanding of various physical principles,
+        like fluid dynamics, optics, solid mechanics, magnetism and thermodynamics.
+        We find that across a range of current models (Sora, Runway, Pika, Lumiere, Stable Video Diffusion, and VideoPoet),
+        physical understanding is severely limited. At the same time, some test cases can already be successfully solved.
+        For instance, fluid dynamics tend to work better than solid mechanics. This indicates that acquiring certain
+        physical principles from observation alone may be possible, but significant challenges remain.
+        While we expect rapid advances ahead, our work demonstrates that visual realism does not imply physical understanding.
+      </p>
+    </div>
+
+
+<div id="podcast-section" class="section-wrapper podcast-center">
+  <h2>Podcast 📻</h2>
+  <p>
+    On a run and want to get a gist of our paper? Listen to the following podcast!
+  </p>
+  <audio controls>
+    <p>Listen to this cool episode on Physics-IQ benchmarking.</p>
+    <source src="assets/updated_podcast.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+</div>
+
+
+       <!-- Leaderboard -->
+<div class="leaderboard">
+  <h2>Leaderboard 🥇</h2>
+  <table class="leaderboard-table">
+    <thead>
+      <tr>
+        <th>Model</th>
+        <th>Physics IQ Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>VideoPoet (multiframe) <span style="color:gold;">&#x1F3C6;</span></td>
+        <td>
+          <div class="progress">
+            <div class="progress-bar" style="width:29.5%; background-color:#CC5500;"></div>
+            <div class="progress-label">29.5%</div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+       <td>Lumiere (multiframe)</td>
+        <td>
+          <div class="progress">
+            <div class="progress-bar" style="width:23.0%; background-color:#1C69A7;"></div>
+            <div class="progress-label">23.0%</div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>Runway Gen 3 (i2v)</td>
+        <td>
+          <div class="progress">
+            <div class="progress-bar" style="width:22.8%; background-color:#2ca02c;"></div>
+            <div class="progress-label">22.8%</div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>VideoPoet (i2v)</td>
+        <td>
+          <div class="progress">
+            <div class="progress-bar" style="width:20.3%; background-color:#FF7F0E;"></div>
+            <div class="progress-label">20.3%</div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>Lumiere (i2v)</td>
+        <td>
+          <div class="progress">
+            <div class="progress-bar" style="width:19.0%; background-color:#17BECF;"></div>
+            <div class="progress-label">19.0%</div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>Stable Video Diffusion (i2v)</td>
+        <td>
+          <div class="progress">
+            <div class="progress-bar" style="width:14.8%; background-color:#9467BD;"></div>
+            <div class="progress-label">14.8%</div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>Pika 1.0 (i2v)</td>
+        <td>
+          <div class="progress">
+            <div class="progress-bar" style="width:13.0%; background-color:#FFD700; color:black;"></div>
+            <div class="progress-label">13.0%</div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>Sora (i2v)</td>
+        <td>
+          <div class="progress">
+            <div class="progress-bar" style="width:10.0%; background-color:#ff0606;"></div>
+            <div class="progress-label">10.0%</div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+  <!-- Samples Section -->
+  <div class="section-wrapper">
+    <h2>Examples 🎞️</h2>
+  </div>
+
+  <!-- Navigation and Video Samples -->
+  <div class="video-samples">
+    <div class="slide-container">
+      <!-- Slide for 'weight' folder -->
+      <div class="slide">
+
+    <div class="real-video">
+          <img src="../weight/real_weight.gif" alt="Real Test Frames"></vimg>
+          <div class="caption">Real Test Frames</div>
+        </div>
+        <div class="frame">
+          <img src="../weight/vp_m_weight.gif" alt="VideoPoet (multiframe)"></img>
+          <div class="caption">VideoPoet (multiframe)</div>
+        </div>
+        <div class="frame">
+          <img src="../weight/vp_i2v_weight.gif" alt="VideoPoet (i2v)"></img>
+          <div class="caption">VideoPoet (i2v)</div>
+        </div>
+        <div class="frame">
+          <img src="../weight/sora_weight.gif" alt="Sora (i2v)"></img>
+          <div class="caption">Sora (i2v)</div>
+        </div>
+        <div class="frame">
+          <img src="../weight/pika_weight.gif" alt="Pika 1.0 (i2v)"></img>
+          <div class="caption">Pika 1.0 (i2v)</div>
+        </div>
+        <div class="frame">
+          <img src="../weight/runway_weight.gif" alt="Runway Gen 3 (i2v)"></img>
+          <div class="caption">Runway Gen 3 (i2v)</div>
+        </div>
+        <div class="frame">
+          <img src="../weight/lum_m_weight.gif" alt="Lumiere (multiframe)"></img>
+          <div class="caption">Lumiere (multiframe)</div>
+        </div>
+        <div class="frame">
+          <img src="../weight/lum_i2v_weight.gif" alt="Lumiere (i2v)"></img>
+          <div class="caption">Lumiere (i2v)</div>
+        </div>
+      </div>
+
+      <!-- Slide for 'paint' folder -->
+      <div class="slide">
+    <div class="real-video">
+          <img src="../paint/real_paint.gif" alt="Real Test Frames"></img>
+          <div class="caption">Real Test Frames</div>
+        </div>
+        <div class="frame">
+          <img src="../paint/vp_m_paint.gif" alt="VideoPoet (multiframe)"></img>
+          <div class="caption">VideoPoet (multiframe)</div>
+        </div>
+        <div class="frame">
+          <img src="../paint/vp_i2v_paint.gif" alt="VideoPoet (i2v)"></img>
+          <div class="caption">VideoPoet (i2v)</div>
+        </div>
+        <div class="frame">
+          <img src="../paint/sora_paint.gif" alt="Sora (i2v)"></img>
+          <div class="caption">Sora (i2v)</div>
+        </div>
+        <div class="frame">
+          <img src="../paint/pika_paint.gif" alt="Pika 1.0 (i2v)"></img>
+          <div class="caption">Pika 1.0 (i2v)</div>
+        </div>
+        <div class="frame">
+          <img src="../paint/runway_paint.gif" alt="Runway Gen 3 (i2v)"></img>
+          <div class="caption">Runway Gen 3 (i2v)</div>
+        </div>
+        <div class="frame">
+          <img src="../paint/lum_m_paint.gif" alt="Lumiere (multiframe)"></img>
+          <div class="caption">Lumiere (multiframe)</div>
+        </div>
+        <div class="frame">
+          <img src="../paint/lum_i2v_paint.gif" alt="Lumiere (i2v)"></img>
+          <div class="caption">Lumiere (i2v)</div>
+        </div>
+      </div>
+
+      <!-- Slide for 'teapot' folder -->
+      <div class="slide">
+    <div class="real-video">
+          <img src="../teapot/real_teapot.gif" alt="Real Test Frames"></img>
+          <div class="caption">Real Test Frames</div>
+        </div>
+        <div class="frame">
+          <img src="../teapot/vp_m_teapot.gif" alt="VideoPoet (multiframe)"></img>
+          <div class="caption">VideoPoet (multiframe)</div>
+        </div>
+        <div class="frame">
+          <img src="../teapot/vp_i2v_teapot.gif" alt="VideoPoet (i2v)"></img>
+          <div class="caption">VideoPoet (i2v)</div>
+        </div>
+        <div class="frame">
+          <img src="../teapot/sora_teapot.gif" alt="Sora (i2v)"></img>
+          <div class="caption">Sora (i2v)</div>
+        </div>
+        <div class="frame">
+          <img src="../teapot/pika_teapot.gif" alt="Pika 1.0 (i2v)"></img>
+          <div class="caption">Pika 1.0 (i2v)</div>
+        </div>
+        <div class="frame">
+          <img src="../teapot/runway_teapot.gif" alt="Runway Gen 3 (i2v)"></img>
+          <div class="caption">Runway Gen 3 (i2v)</div>
+        </div>
+        <div class="frame">
+          <img src="../teapot/lum_m_teapot.gif" alt="Lumiere (multiframe)"></img>
+          <div class="caption">Lumiere (multiframe)</div>
+        </div>
+        <div class="frame">
+          <img src="../teapot/lum_i2v_teapot.gif" alt="Lumiere (i2v)"></img>
+          <div class="caption">Lumiere (i2v)</div>
+        </div>
+      </div>
+
+      <!-- Slide for 'match' folder -->
+      <div class="slide">
+    <div class="real-video">
+          <img src="../match/real_match.gif" alt="Real Test Frames"></img>
+          <div class="caption">Real Test Frames</div>
+        </div>
+        <div class="frame">
+          <img src="../match/vp_m_match.gif" alt="VideoPoet (multiframe)"></img>
+          <div class="caption">VideoPoet (multiframe)</div>
+        </div>
+        <div class="frame">
+          <img src="../match/vp_i2v_match.gif" alt="VideoPoet (i2v)"></img>
+          <div class="caption">VideoPoet (i2v)</div>
+        </div>
+        <div class="frame">
+          <img src="../match/sora_match.gif" alt="Sora (i2v)"></img>
+          <div class="caption">Sora (i2v)</div>
+        </div>
+        <div class="frame">
+          <img src="../match/pika_match.gif" alt="Pika 1.0 (i2v)"></img>
+          <div class="caption">Pika 1.0 (i2v)</div>
+        </div>
+        <div class="frame">
+          <img src="../match/runway_match.gif" alt="Runway Gen 3 (i2v)"></img>
+          <div class="caption">Runway Gen 3 (i2v)</div>
+        </div>
+        <div class="frame">
+          <img src="../match/lum_m_match.gif" alt="Lumiere (multiframe)"></img>
+          <div class="caption">Lumiere (multiframe)</div>
+        </div>
+        <div class="frame">
+          <img src="../match/lum_i2v_match.gif" alt="Lumiere (i2v)"></img>
+          <div class="caption">Lumiere (i2v)</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+
+
+<div class="citation-section">
+  <h2>BibTeX 😊</h2>
+  <p>If you use our dataset and metrics, please cite our work:</p>
+  <div style="background: #f9f9f9; border: 1px solid #ccc; border-radius: 5px; padding: 1rem; position: relative;">
+    <pre id="citation-text" style="margin: 0; font-family: monospace; font-size: 0.9rem; white-space: pre-wrap; word-wrap: break-word;">
+@article{motamed2025generative,
+  title={Do generative video models understand physical principles?},
+  author={Motamed, Saman and Culp, Laura and Swersky, Kevin and Jaini, Priyank and Geirhos, Robert},
+  journal={arXiv preprint arXiv:2501.09038},
+  year={2025}
+}
+    </pre>
+    <button onclick="copyCitation()" style="position: absolute; top: 10px; right: 10px; background: #007BFF; color: #fff; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer; font-size: 0.8rem;">
+      Copy
+    </button>
+  </div>
+</div>
+
+<script>
+  function copyCitation() {
+    const citationText = document.getElementById("citation-text").innerText; // Get the citation text
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      // Modern method using Clipboard API
+      navigator.clipboard.writeText(citationText)
+
+        .catch(() => {
+          fallbackCopy(citationText);
+        });
+    } else {
+      // Fallback method
+      fallbackCopy(citationText);
+    }
+  }
+
+  function fallbackCopy(text) {
+    // Create a temporary textarea element
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    document.body.appendChild(textArea);
+    textArea.select();
+    try {
+      document.execCommand("copy"); // Fallback to execCommand
+    } catch (err) {
+      alert("Failed to copy citation. Please copy it manually.");
+    }
+    document.body.removeChild(textArea); // Clean up
+  }
+</script>
+
+
+<!-- Footer Logo -->
+<footer>
+  <p>Thank you for visiting our benchmark!</p>
+  <img src="../assets/gdm_logo.jpg" alt="Physics-IQ Logo" style="max-width: 250px; height: auto; margin-top: 1rem;">
+</footer>
+
+
+
+</body>
+</html>
