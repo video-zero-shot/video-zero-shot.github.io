@@ -428,12 +428,6 @@ body {
   <a class="btn-link" href="https://arxiv.org/pdf/2501.09038" target="_blank">
     PDF 📃
   </a>
-  <a class="btn-link" href="https://github.com/google-deepmind/physics-IQ-benchmark" target="_blank">
-    <img src="assets/github-logo.png" alt="GitHub Logo" class="logo logo-bigger">Code
-  </a>
-  <a class="btn-link" href="https://physics-iq.github.io/workshop/physics-iq-challenge.html" target="_blank">
-    ICCV 25 Challenge 🧠
-  </a>
   <a class="btn-link" href="#podcast-section">
     Podcast 📻
   </a>
@@ -445,8 +439,7 @@ body {
     <div class="section-wrapper">
       <h2>TL;DR</h2>
       <p>
-        We develop the <strong>Physics-IQ benchmark and score</strong>, which reveals that current generative video models lack physical understanding despite sometimes achieving visual realism. 
-        Use our benchmark and dataset to assess your video model's physics understanding! 
+        A large video model (Veo 3) shows emergent zero-shot abilities across many different visual tasks, indicating that video models are on a path to becoming unified foundation models for vision just like LLMs became foundation models for language.
       </p>
     </div>
 
@@ -486,22 +479,9 @@ body {
 
     <!-- Abstract -->
     <div class="section-wrapper">
-      <h2>Abstract 📣</h2>
+      <h2>Abstract</h2>
       <p>
-        AI video generation is undergoing a revolution, with quality and realism advancing rapidly.
-        These advances have led to a passionate scientific debate: Do video models learn “world models”
-        that discover laws of physics — or, alternatively, are they merely sophisticated pixel predictors
-        that achieve visual realism without understanding the physical principles of reality?
-      </p>
-      <p>
-        We address this question by developing <strong>Physics-IQ</strong>, a comprehensive benchmark
-        dataset that can only be solved by acquiring a deep understanding of various physical principles,
-        like fluid dynamics, optics, solid mechanics, magnetism and thermodynamics.
-        We find that across a range of current models (Sora, Runway, Pika, Lumiere, Stable Video Diffusion, and VideoPoet),
-        physical understanding is severely limited. At the same time, some test cases can already be successfully solved.
-        For instance, fluid dynamics tend to work better than solid mechanics. This indicates that acquiring certain
-        physical principles from observation alone may be possible, but significant challenges remain.
-        While we expect rapid advances ahead, our work demonstrates that visual realism does not imply physical understanding.
+        The remarkable zero-shot capabilities of Large Language Models (LLMs) have propelled natural language processing from task-specific models to unified, generalist foundation models. This transformation emerged from simple primitives: large, generative models trained on web-scale data. Curiously, the same primitives apply to today's generative video models. Could video models be on a trajectory towards general-purpose vision understanding, much like LLMs developed general-purpose language understanding? We demonstrate that Veo 3 can zero-shot solve a broad variety of tasks it wasn't explicitly trained for: segmenting objects, detecting edges, editing images, understanding physical properties, recognizing object affordances, simulating tool use, and much more. These abilities to perceive, model, and manipulate the visual world enable early forms of visual reasoning like maze and symmetry solving. Veo 3's emergent zero-shot capabilities indicate that video models are on a path to becoming unified, generalist vision foundation models.
       </p>
     </div>
 
