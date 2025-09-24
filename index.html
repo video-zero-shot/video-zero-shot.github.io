@@ -7,14 +7,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <!-- Open Graph Meta Tags -->
   <meta property="og:title" content="Video models are zero-shot learners and reasoners" />
-  <meta property="og:description" content="Video models are zero-shot learners and reasoners" />
-<meta property="og:image" content="https://video-zero-shot.github.io/assets/preview.png" />
+  <meta property="og:description" content="Video models like Veo 3 are on a path to become vision foundation models." />
+  <meta property="og:image" content="https://video-zero-shot.github.io/assets/prev.png" />
   <meta property="og:url" content="https://video-zero-shot.github.io/" />
   <meta property="og:type" content="website" />
 
 
   <!-- Use your custom duck favicon -->
-  <link rel="icon" type="image/png" href="assets/preview.png" />
+  <link rel="icon" type="image/png" href="assets/duckie.png" />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
   <style>
     /* Reset default margins/padding */
@@ -440,18 +442,18 @@ body {
     <header>
 	    <h1>Video models are zero-shot<br>learners and reasoners</h1>
       <div class="authors">
-          <a href="https://thaddaeuswiedemer.github.io/" target="_blank">Thaddäus Wiedemer</a><sup>1,*</sup>, 
-          <a href="https://effie-li.github.io/" target="_blank">Yuxuan Li</a><sup>1</sup>, 
-          <a href="https://www.paulvicol.com/" target="_blank">Paul Vicol</a><sup>1</sup>, 
-          <a href="https://sites.google.com/corp/view/gugurus/home" target="_blank">Shixiang Shane Gu</a><sup>1</sup>, 
-          <a href="https://www.linkedin.com/in/nmatares/" target="_blank">Nick Matarese</a><sup>1</sup>, 
-          <a href="https://scholar.google.com/citations?user=IrixA8MAAAAJ&hl=en" target="_blank">Kevin Swersky</a><sup>1</sup>, 
-          <a href="https://beenkim.github.io/" target="_blank">Been Kim</a><sup>1</sup>, 
-          <a href="https://priyankjaini.github.io/" target="_blank">Priyank Jaini</a><sup>1,*</sup>, 
-          <a href="https://robertgeirhos.com/" target="_blank">Robert Geirhos</a><sup>1,*</sup>
+          <a class="blue" style="text-decoration: none;" href="https://thaddaeuswiedemer.github.io/" target="_blank">Thaddäus Wiedemer</a><sup>1,*</sup>, 
+          <a class="blue" style="text-decoration: none;" href="https://effie-li.github.io/" target="_blank">Yuxuan Li</a><sup>1</sup>, 
+          <a class="blue" style="text-decoration: none;" href="https://www.paulvicol.com/" target="_blank">Paul Vicol</a><sup>1</sup>, 
+          <a class="blue" style="text-decoration: none;" href="https://sites.google.com/corp/view/gugurus/home" target="_blank">Shixiang Shane Gu</a><sup>1</sup>, 
+          <a class="blue" style="text-decoration: none;" href="https://www.linkedin.com/in/nmatares/" target="_blank">Nick Matarese</a><sup>1</sup>, 
+          <a class="blue" style="text-decoration: none;" href="https://scholar.google.com/citations?user=IrixA8MAAAAJ&hl=en" target="_blank">Kevin Swersky</a><sup>1</sup>, 
+          <a class="blue" style="text-decoration: none;" href="https://beenkim.github.io/" target="_blank">Been Kim</a><sup>1</sup>, 
+          <a class="blue" style="text-decoration: none;" href="https://priyankjaini.github.io/" target="_blank">Priyank Jaini</a><sup>1,*</sup>, 
+          <a class="blue" style="text-decoration: none;" href="https://robertgeirhos.com/" target="_blank">Robert Geirhos</a><sup>1,*</sup>
       </div>
 <div class="affiliations">
-  <strong>1:</strong> 
+  <strong>1</strong>: 
   <span class="blue">G</span><span class="red">o</span><span class="yellow">o</span><span class="blue">g</span><span class="green">l</span><span class="red">e</span>
   <span class="blue">D</span><span class="blue">e</span><span class="blue">e</span><span class="blue">p</span><span class="blue">M</span><span class="blue">i</span><span class="blue">n</span><span class="blue">d</span>
 </div>
@@ -466,7 +468,7 @@ body {
 <!-- Buttons -->
 <div class="buttons">
   <a class="btn-link" href="https://arxiv.org/abs/2501.09038" target="_blank">
-    <img src="assets/arxiv.jpg" alt="arXiv Logo" class="logo logo-original">Paper
+    <img src="assets/arxiv_transparent.png" alt="arXiv Logo" class="logo logo-original">Paper
   </a>
   <a class="btn-link" href="https://arxiv.org/pdf/2501.09038" target="_blank">
     📃 PDF
@@ -482,7 +484,7 @@ body {
     <div class="section-wrapper">
       <h2>TL;DR</h2>
       <p>
-        Veo 3 shows emergent zero-shot abilities across many different visual tasks, indicating that video models are on a path to becoming unified foundation models for vision just like LLMs became foundation models for language.
+        Veo 3 shows emergent zero-shot abilities across many visual tasks, indicating that video models are on a path to becoming vision foundation models—just like LLMs became foundation models for language.
       </p>
     </div>
 
@@ -553,7 +555,7 @@ body {
     <!-- Abstract -->
     <div class="section-wrapper">
       <h2>Abstract</h2>
-      <p>
+      <p style="text-align: justify;">
       The remarkable zero-shot capabilities of Large Language Models (LLMs) have propelled natural language processing from task-specific models to unified, generalist foundation models. This transformation emerged from simple primitives: large, generative models trained on web-scale data. Curiously, the same primitives apply to today's generative video models. Could video models be on a trajectory towards general-purpose vision understanding, much like LLMs developed general-purpose language understanding?<br>
 	We demonstrate that Veo 3 can zero-shot solve a broad variety of tasks it wasn't explicitly trained for: segmenting objects, detecting edges, editing images, understanding physical properties, recognizing object affordances, simulating tool use, and much more. These abilities to perceive, model, and manipulate the visual world enable early forms of visual reasoning like maze and symmetry solving. Veo 3's emergent zero-shot capabilities indicate that video models are on a path to becoming unified, generalist vision foundation models.
       </p>
@@ -1119,7 +1121,6 @@ pattern without modification. Static camera perspective, no zoom or pan.">
 <div class="content-wrapper"> <!-- Restart content wrapper for footer -->
 <div class="citation-section">
   <h2>BibTeX 😊</h2>
-  <p>Citation:</p>
   <div style="background: #f9f9f9; border: 1px solid #ccc; text-align: left; border-radius: 5px; padding: 1rem; position: relative;">
     <pre id="citation-text" style="margin: 0; font-family: monospace; font-size: 0.9rem; white-space: pre-wrap; word-wrap: break-word;">
 @article{wiedemer2025video,
@@ -1127,10 +1128,23 @@ pattern without modification. Static camera perspective, no zoom or pan.">
   author={Wiedemer, Thaddäus and Li, Yuxuan and Vicol, Paul and Gu, Shixiang Shane and Matarese, Nick and Swersky, Kevin and Kim, Been and Jaini, Priyank and Geirhos, Robert},
   journal={arXiv preprint arXiv:TBD},
   year={2025}
-}
-    </pre>
-    <button onclick="copyCitation()" style="position: absolute; top: 10px; right: 10px; background: #007BFF; color: #fff; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer; font-size: 0.8rem;">
+}</pre>
+    <!-- <button onclick="copyCitation()" style="position: absolute; top: 10px; right: 10px; background: #007BFF; color: #fff; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer; font-size: 0.8rem;">
       Copy
+    </button> -->
+    <button onclick="copyCitation()" style="
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: none; /* Remove background */
+        border: none;    /* Remove border */
+        padding: 0;      /* Remove padding */
+        cursor: pointer;
+        font-size: 1.5rem; /* Adjust icon size */
+        color: #ccc;  /* Set icon color */
+        /* Remove border-radius, font-size (for text), color (for text) as they are no longer relevant */
+        " title="Copy to clipboard">
+      <i class="fa-regular fa-copy"></i> <!-- Font Awesome copy icon -->
     </button>
   </div>
 </div>
@@ -1178,5 +1192,3 @@ pattern without modification. Static camera perspective, no zoom or pan.">
 
 </body>
 </html>
-
-
