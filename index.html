@@ -1,229 +1,238 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
   <head>
-  <meta charset="UTF-8" />
-  <title>Video models are zero-shot learners and reasoners</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- Open Graph Meta Tags -->
-  <meta property="og:title" content="Video models are zero-shot learners and reasoners" />
-  <meta property="og:description" content="Video models like Veo 3 are on a path to become vision foundation models." />
-  <meta property="og:image" content="https://video-zero-shot.github.io/assets/preview.png" />
-  <meta property="og:url" content="https://video-zero-shot.github.io/" />
-  <meta property="og:type" content="website" />
+    <meta charset="UTF-8" />
+    <title>Video models are zero-shot learners and reasoners</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Video models are zero-shot learners and reasoners" />
+    <meta
+      property="og:description"
+      content="Video models like Veo 3 are on a path to become vision foundation models."
+    />
+    <meta property="og:image" content="https://video-zero-shot.github.io/assets/preview.png" />
+    <meta property="og:url" content="https://video-zero-shot.github.io/" />
+    <meta property="og:type" content="website" />
 
-  <!-- Use your custom duck favicon -->
-  <link rel="icon" type="image/png" href="assets/duckie.png" />
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/duckie.png" />
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Import FontAwesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
 
-  <style>
-    /* Reset default margins/padding */
-  html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%; 
-  }
-  .affiliations span {
-    display: inline; /* Ensure no additional spacing is introduced */
-    margin: 0;
-    padding: 0;
-  }
-body {
-  min-height: 100vh;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color: #333;
-  text-align: center;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background: #fff; /* Plain white background */
-}
+    <style>
+      :root {
+        --text-primary: #333;
+        --text-secondary: #666;
+        --background-primary: #fff;
+        --background-secondary: #f9f9f9;
+        --border-color: #ccc;
+        --google-blue: #1a73e8;
+        --google-red: #d93025;
+        --google-yellow: #f9ab00;
+        --google-green: #1e8e3e;
+        --perception-color: var(--google-blue);
+        --modeling-color: #925bcf;
+        --manipulation-color: #c440a7;
+        --reasoning-color: #da2f77;
+      }
+      .blue {
+        color: var(--google-blue);
+      }
+      .red {
+        color: var(--google-red);
+      }
+      .yellow {
+        color: var(--google-yellow);
+      }
+      .green {
+        color: var(--google-green);
+      }
+      .perception-color {
+        color: var(--perception-color);
+      }
+      .modeling-color {
+        color: var(--modeling-color);
+      }
+      .manipulation-color {
+        color: var(--manipulation-color);
+      }
+      .reasoning-color {
+        color: var(--reasoning-color);
+      }
 
-  .blue { color: #4285F4; } /* Blue */
-  .red { color: #EA4335; }  /* Red */
-  .yellow { color: #FBBC05; } /* Yellow */
-  .green { color: #34A853; } /* Green */
+      body {
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        color: var(--text-primary);
+        text-align: center;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        background: var(--background-primary);
+      }
 
-.content-wrapper {
-  max-width: 800px; /* Keep text content constrained */
-  margin: 0 auto;
-  background: #fff; /* Change to white */
-  /* min-height: 100vh; */ /* Removed to allow multiple wrappers */
-  position: relative; 
-  z-index: 1; 
-  box-sizing: border-box;
-}
-  .pdf-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Centers the content horizontally */
-    justify-content: center; /* Centers the content vertically */
-    margin: 2rem auto;
-  }
+      /* Display content as a centered column */
+      .content-wrapper {
+        max-width: 800px;
+        margin: 0 auto;
+        background: var(--background-primary);
+        position: relative;
+        z-index: 1;
+        box-sizing: border-box;
+      }
 
-  .pdf-container img {
-    max-width: 60%; /* Ensures the image is responsive */
-    height: auto; /* Maintains aspect ratio */
-    border-radius: 8px; /* Adds rounded corners (optional) */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow (optional) */
-  }
+      header {
+        padding: 1.5rem 1rem;
+        margin-bottom: 1rem;
+      }
 
-  .pdf-caption {
-    margin-top: 0.5rem;
-    font-size: 0.9rem;
-    color: #555;
-    text-align: center;
-  }
+      h1 {
+        font-size: 2rem;
+        margin: 0 0 0.75rem;
+        line-height: 1.2;
+      }
 
+      .authors {
+        margin-top: 0.5rem;
+      }
 
+      .authors a {
+        text-decoration: none;
+        color: var(--google-blue);
+      }
 
-    .teaser-container {
-      max-width: 800px;
-      margin: 2rem auto;
-      padding: 0 1rem;
-    }
-    video {
-      width: 100%;
-      height: auto;
-      border-radius: 0.75rem; 
-    }
+      .affiliations {
+        color: var(--text-secondary);
+        margin-top: 0.75rem;
+      }
 
-    header {
-      padding: 1.5rem 1rem;
-      margin-bottom: 1rem;
-    }
-    h1 {
-      font-size: 2rem;
-      margin: 0 0 0.5rem;
-      line-height: 1.2;
-    }
-    .authors {
-      font-size: 1rem;
-      color: #555;
-      margin-top: 0.5rem;
-    }
-    .affiliations {
-      font-size: 1rem;
-      color: #666;
-      margin-top: 0.5rem;
-    }
-    .asterisk-note {
-      font-style: italic;
-      font-size: 0.9rem;
-      color: #666;
-      display: block;
-      margin-top: 0.5rem;
-    }
+      .affiliations span {
+        display: inline; /* Ensure no additional spacing is introduced */
+        margin: 0;
+        padding: 0;
+      }
 
-    .buttons {
-      margin: 1.5rem auto;
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-    .btn-link {
-      display: inline-flex;
-      align-items: center;
-      background: #000;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 9999px;
-      padding: 0.5rem 1rem;
-      transition: background 0.2s ease-in-out;
-      font-weight: 500;
-      border: none;
-    }
-    .btn-link:hover {
-      background: #333;
-    }
-    .logo {
-      width: 20px;
-      height: auto;
-      margin-right: 0.5rem;
-      filter: invert(1);
-    }
-    .logo-original {
-      filter: none !important;
-    }
-    .logo-bigger {
-      width: 24px !important;
-    }
+      .asterisk-note {
+        font-style: italic;
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        display: block;
+        margin-top: 0.5rem;
+      }
 
-    .section-wrapper {
-      max-width: 800px;
-      margin: 2rem auto;
-      padding: 0 1rem;
-      text-align: left;
-    }
-    .section-wrapper h2 {
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-      text-align: center;
-    }
-    .section-wrapper p {
-      line-height: 1.6;
-      margin-bottom: 1rem;
-    }
+      .button-wrapper {
+        margin: 2rem auto;
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
 
-    .leaderboard {
-      max-width: 800px;
-      margin: 2rem auto;
-      padding: 0 1rem;
-      text-align: center;
-    }
-    .leaderboard-table {
-      width: 100%;
-      max-width: 600px;
-      margin: 0 auto;
-      border-collapse: collapse;
-    }
-    .leaderboard-table th,
-    .leaderboard-table td {
-      padding: 0.75rem;
-      border-bottom: 1px solid #ddd;
-    }
-    .leaderboard-table th {
-      background: #f2eee8;
-      font-weight: 600;
-    }
-    .leaderboard-table tr:last-child td {
-      border-bottom: none;
-    }
+      .btn-link {
+        display: flex;
+        align-items: center;
+        background: var(--text-primary);
+        color: var(--background-primary);
+        text-decoration: none;
+        border-radius: 9999px;
+        padding: 0.5rem 1rem;
+        transition: background 0.2s ease-in-out;
+        font-weight: 500;
+        border: none;
+      }
 
-     /* Progress bar styles */
-    .progress {
-      background-color: #e0e0e0; /* Light gray for background */
-      border-radius: 5px;
-      height: 20px;
-      position: relative;
-      overflow: hidden;
-    }
+      .btn-link:hover {
+        background: var(--google-blue);
+      }
 
-    .progress-bar {
-      height: 100%;
-      border-radius: 5px;
-      text-align: center;
-      color: white; /* Text color inside the filled portion */
-      font-size: 12px;
-      line-height: 20px;
-      position: relative;
-    }
+      .logo {
+        width: 20px;
+        height: auto;
+      }
 
-    .progress-label {
-      position: absolute;
-      top: 0;
-      right: 5px; /* Adjust to ensure the text stays within the unfilled area */
-      font-size: 12px;
-      color: black; /* Black text for the unfilled area */
-      line-height: 20px; /* Align vertically with the bar height */
-    }
+      .btn-link i,
+      .btn-link .logo {
+        margin-right: 0.5rem;
+      }
 
-    /*
-    * CSS for the Video Grids
-    */
-    .video-grid {
+      .text-section {
+        margin: 2rem 0;
+        padding: 0 1rem;
+        text-align: justify;
+      }
+
+      .text-section h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        text-align: center;
+      }
+
+      .text-section p {
+        line-height: 1.6;
+        margin-bottom: 1rem;
+      }
+
+      .overview-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        width: 90%;
+        max-width: 1200px;
+        margin: 2rem auto;
+        justify-content: center;
+        align-items: start;
+      }
+
+      .overview-column {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        flex: 1 1 100px;
+      }
+
+      .overview-videos {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .video-wrapper {
+        position: relative;
+      }
+
+      video {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        border-radius: 8px;
+        border: 1px solid var(--text-primary);
+        overflow: hidden;
+      }
+
+      .overview-title {
+        font-weight: bold;
+        font-size: 1.1rem;
+        margin: 0;
+      }
+
+      #podcast-section {
+        text-align: center;
+      }
+
+      .section-header {
+        font-size: 2rem;
+        font-weight: 600;
+        margin-top: 3rem;
+        margin-bottom: 1rem;
+        text-align: center;
+      }
+
+      .video-grid {
         display: grid;
         /* Creates 3 columns of equal width (1 fraction) */
         grid-template-columns: repeat(3, 1fr);
@@ -231,361 +240,273 @@ body {
         width: 90%; /* Adjust to your preferred width */
         max-width: 1200px; /* Max width for large screens */
         margin: 40px auto; /* Center the grid on the page */
-    }
+      }
 
-    /* NEW: Overview Grid (4 columns) */
-    .overview-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 20px; /* Space between the videos */
-        width: 90%; /* Adjust to your preferred width */
-        max-width: 1200px; /* Max width for large screens */
-        margin: 40px auto; /* Center the grid on the page */
-        /* Align items at the top of the cell */
-        align-items: start;
-    }
-    
-    /* New wrapper for video and title */
-    .video-cell-wrapper {
-        position: relative;
-    }
-
-    /*
-    * Styling for the Video Elements
-    */
-    .video-container {
-        /* Makes the video fit nicely within the grid cell */
-        width: 100%;
-        padding-top: 56.25%; /* CHANGED: Creates a 16:9 aspect ratio */
-        position: relative;
-        overflow: hidden;
-        border-radius: 8px; /* Optional: adds rounded corners */
-        border: 1px solid #000; /* ADDED: Thin black outline */
-    }
-
-    .video-container video {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover; /* Ensures the video fills the container without distortion */
-        border-radius: 8px; /* ADDED: Match container's rounding to fix corner artifact */
-    }
-
-    /* ADDED: New style for the video title */
-    .video-title {
+      .video-title {
         text-align: center;
         margin-top: 8px;
         font-size: 0.9rem;
-        color: #333;
         font-weight: 500;
-    }
+      }
 
-    /* ADDED: New styles for section headers */
-    .section-header {
-      font-size: 2rem;
-      font-weight: 600;
-      margin-top: 2.5rem;
-      margin-bottom: 1.5rem;
-      text-align: center;
-    }
-    .perception-header { color: #1A73E8; }
-    .modeling-header { color: #925BCF; }
-    .manipulation-header { color: #C440A7; }
-    .reasoning-header { color: #DA2F77; }
+      /* Responsive adjustments for grids */
+      @media (max-width: 768px) {
+        /* Change to 1 column on tablets/smaller devices */
+        .overview-column {
+          flex-basis: 100%;
+        }
 
-    /* ADDED: Color classes for overview */
-    .perception-color { color: #1A73E8; }
-    .modeling-color { color: #925BCF; }
-    .manipulation-color { color: #C440A7; }
-    .reasoning-color { color: #DA2F77; }
+        .overview-videos {
+          flex-direction: row;
+        }
 
-
-    /* Responsive adjustments for grids */
-    @media (max-width: 768px) {
+        /* Change to 2 columns on tablets/smaller devices */
         .video-grid {
-            /* Change to 2 columns on tablets/smaller devices */
-            grid-template-columns: repeat(2, 1fr);
+          grid-template-columns: repeat(2, 1fr);
         }
-        .overview-grid {
-            grid-template-columns: repeat(2, 1fr);
-        }
-    }
+      }
 
-    @media (max-width: 480px) {
+      @media (max-width: 480px) {
+        /* Remove title break on mobile devices */
+        .title-break {
+          display: none;
+        }
+
+        /* Change to 1 column on mobile phones */
         .video-grid {
-            /* Change to 1 column on mobile phones */
-            grid-template-columns: 1fr;
+          grid-template-columns: 1fr;
         }
-        .overview-grid {
-            grid-template-columns: 1fr;
-        }
-    }
+      }
 
+      footer {
+        margin: 2rem 0;
+        color: var(--text-secondary);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+      }
 
-    /* Carousel / Video Samples */
-    .video-samples {
-      max-width: 800px;
-      margin: 1rem auto;
-      position: relative;
-      overflow: hidden;
-    }
-    /* Container for all slides */
-    .slide-container {
-      width: 100%;
-      overflow: hidden;
-    }
-
-    /* Individual slide */
-    /* Updated slide styles for real video and two rows of generated videos */
-    .slide {
-        display: grid;
-        grid-template-rows: auto auto auto; /* 3 rows: 1 for real, 2 for generated */
-        grid-template-columns: repeat(4, 1fr); /* 4 videos per row for generated */
-        gap: 1rem; /* Space between videos */
+      .citation-box {
+        background: var(--background-secondary);
+        border: 1px solid var(--border-color);
+        text-align: left;
+        border-radius: 5px;
         padding: 1rem;
-        box-sizing: border-box;
-        justify-items: center; /* Center items horizontally */
-        align-items: center; /* Center items vertically */
-        width: 100%;
+        position: relative;
       }
 
-      .real-video {
-        grid-column: 1 / -1; /* Span all columns for the real video */
-        justify-self: center; /* Center the real video horizontally */
+      .citation-pre {
+        margin: 0;
+        font-family: monospace;
+        font-size: 0.9rem;
+        white-space: pre-wrap;
+        word-wrap: break-word;
       }
-    .real-video img {
-      width: 660px; /* Fixed width */
-      height: 371px; /* Fixed height */
-      object-fit: cover; /* Ensures aspect ratio doesn't distort */
-      border-radius: 0.5rem; /* Optional: Rounded corners */
-    }
 
-    /* Individual video frame */
-    .frame {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      max-width: 200px; /* Adjust as needed for consistent size */
-    }
+      .citation-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        font-size: 1.5rem;
+        color: var(--border-color);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="content-wrapper">
+      <header>
+        <h1>Video models are zero-shot <br class="title-break" />learners and reasoners</h1>
+        <div class="authors">
+          <a href="https://thaddaeuswiedemer.github.io/" target="_blank" rel="noopener noreferrer"
+            >Thaddäus Wiedemer</a
+          >*,
+          <a href="https://effie-li.github.io/" target="_blank" rel="noopener noreferrer"
+            >Yuxuan Li</a
+          >,
+          <a href="https://www.paulvicol.com/" target="_blank" rel="noopener noreferrer"
+            >Paul Vicol</a
+          >,
+          <a
+            href="https://sites.google.com/corp/view/gugurus/home"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Shixiang Shane Gu</a
+          >,
+          <a href="https://www.linkedin.com/in/nmatares/" target="_blank" rel="noopener noreferrer"
+            >Nick Matarese</a
+          >,
+          <a
+            href="https://scholar.google.com/citations?user=IrixA8MAAAAJ&hl=en"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Kevin Swersky</a
+          >,
+          <a href="https://beenkim.github.io/" target="_blank" rel="noopener noreferrer">Been Kim</a
+          >,
+          <a href="https://priyankjaini.github.io/" target="_blank" rel="noopener noreferrer"
+            >Priyank Jaini</a
+          >*,
+          <a href="https://robertgeirhos.com/" target="_blank" rel="noopener noreferrer"
+            >Robert Geirhos</a
+          >*
+        </div>
+        <div class="affiliations">
+          <span class="blue">G</span><span class="red">o</span><span class="yellow">o</span
+          ><span class="blue">g</span><span class="green">l</span><span class="red">e</span>
+          <span class="blue">DeepMind</span>
+        </div>
+        <div class="asterisk-note">* Joint leads</div>
+      </header>
 
-    /* Style for video or GIF */
-    .frame img {
-      width: 100%;
-      height: auto;
-      border-radius: 0.5rem;
-    }
-
-    /* Caption for videos */
-    .caption {
-      font-size: 0.9rem;
-      color: #666;
-      margin-top: 0.5rem;
-      text-align: center;
-    }
-
-    .podcast-center {
-      display: flex;
-      flex-direction: column;
-      align-items: center; /* Centers items horizontally */
-      justify-content: center; /* Ensures vertical centering if needed */
-      text-align: center; /* Centers the text */
-    }
-
-    .podcast-center p {
-      margin: 0 0 1rem; /* Add spacing below the text */
-    }
-
-    .podcast-center audio {
-      margin-top: 1rem; /* Add spacing above the audio player */
-    }
-
-
-    .arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(0, 0, 0, 0.5);
-      color: #fff;
-      padding: 0.75rem;
-      cursor: pointer;
-      border-radius: 9999px;
-      user-select: none;
-      font-size: 1.25rem;
-      line-height: 1.25rem;
-      z-index: 10;
-    }
-    .arrow:hover {
-      background: rgba(0, 0, 0, 0.7);
-    }
-    .arrow-left {
-      left: 30px;
-    }
-    .arrow-right {
-      right: 30px;
-    }
-
-    footer {
-      margin: 2rem 0;
-      color: #999;
-      font-size: 0.9rem;
-      text-align: center;
-    }
-  </style>
-</head>
-<body>
-
-  <div class="content-wrapper">
-    <!-- Teaser Video at the Top -->
-
-    <header>
-	    <h1>Video models are zero-shot<br>learners and reasoners</h1>
-      <div class="authors">
-          <a class="blue" style="text-decoration: none;" href="https://thaddaeuswiedemer.github.io/" target="_blank">Thaddäus Wiedemer</a><sup>*</sup>, 
-          <a class="blue" style="text-decoration: none;" href="https://effie-li.github.io/" target="_blank">Yuxuan Li</a>, 
-          <a class="blue" style="text-decoration: none;" href="https://www.paulvicol.com/" target="_blank">Paul Vicol</a>, 
-          <a class="blue" style="text-decoration: none;" href="https://sites.google.com/corp/view/gugurus/home" target="_blank">Shixiang Shane Gu</a>, 
-          <a class="blue" style="text-decoration: none;" href="https://www.linkedin.com/in/nmatares/" target="_blank">Nick Matarese</a>, 
-          <a class="blue" style="text-decoration: none;" href="https://scholar.google.com/citations?user=IrixA8MAAAAJ&hl=en" target="_blank">Kevin Swersky</a>, 
-          <a class="blue" style="text-decoration: none;" href="https://beenkim.github.io/" target="_blank">Been Kim</a>, 
-          <a class="blue" style="text-decoration: none;" href="https://priyankjaini.github.io/" target="_blank">Priyank Jaini</a><sup>*</sup>, 
-          <a class="blue" style="text-decoration: none;" href="https://robertgeirhos.com/" target="_blank">Robert Geirhos</a><sup>*</sup>
-      </div>
-<div class="affiliations">
-  <span class="blue">G</span><span class="red">o</span><span class="yellow">o</span><span class="blue">g</span><span class="green">l</span><span class="red">e</span>
-  <span class="blue">D</span><span class="blue">e</span><span class="blue">e</span><span class="blue">p</span><span class="blue">M</span><span class="blue">i</span><span class="blue">n</span><span class="blue">d</span>
-</div>
-
-      <div class="asterisk-note">
-          * Joint leads.<br>
+      <div class="button-wrapper">
+        <a
+          class="btn-link"
+          href="https://arxiv.org/abs/2509.20328"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img src="assets/arxiv_transparent.png" alt="arXiv Logo" class="logo" />Paper
+        </a>
+        <a
+          class="btn-link"
+          href="https://arxiv.org/pdf/2509.20328"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <i class="fa-regular fa-file"></i>PDF
+        </a>
+        <a class="btn-link" href="#podcast-section">
+          <i class="fa-solid fa-headphones"></i>Podcast
+        </a>
       </div>
 
-
-    </header>
-
-<!-- Buttons -->
-<div class="buttons">
-  <a class="btn-link" href="https://arxiv.org/abs/2509.20328" target="_blank">
-    <img src="assets/arxiv_transparent.png" alt="arXiv Logo" class="logo logo-original">Paper
-  </a>
-  <a class="btn-link" href="https://arxiv.org/pdf/2509.20328" target="_blank">
-    <i class="fa-regular fa-file" style="margin-right: 0.8rem;"></i>PDF
-  </a>
-  <a class="btn-link" href="#podcast-section">
-    <i class="fa-solid fa-headphones" style="margin-right: 0.8rem;"></i>Podcast
-  </a>
-</div>
-
-
-
-    <!-- TL;DR -->
-    <div class="section-wrapper">
-      <h2>TL;DR</h2>
-      <p>
-        Veo 3 shows emergent zero-shot abilities across many visual tasks, indicating that video models are on a path to becoming vision foundation models—just like LLMs became foundation models for language.
-      </p>
+      <div class="text-section">
+        <h2>TL;DR</h2>
+        <p>
+          Veo 3 shows emergent zero-shot abilities across many visual tasks, indicating that video
+          models are on a path to becoming vision foundation models—just like LLMs became foundation
+          models for language.
+        </p>
+      </div>
     </div>
 
-</div> <!-- END of content-wrapper -->
-
-
-<!-- REPLACED GIF-CONTAINER with OVERVIEW-GRID -->
-<div class="overview-grid">
-    <!-- ADDED: Title row -->
-    <div><p class="video-title perception-color" style="font-weight: bold; font-size: 1.1rem; margin-top:0;">Perception</p></div>
-    <div><p class="video-title modeling-color" style="font-weight: bold; font-size: 1.1rem; margin-top:0;">Modeling</p></div>
-    <div><p class="video-title manipulation-color" style="font-weight: bold; font-size: 1.1rem; margin-top:0;">Manipulation</p></div>
-    <div><p class="video-title reasoning-color" style="font-weight: bold; font-size: 1.1rem; margin-top:0;">Reasoning</p></div>
-
-    <!-- Col 1: Perception -->
-    <div class="video-cell-wrapper" title="Add a bright blue dot at the tip of the branch on which the macaw is sitting. The macaw’s eye turns bright red. Everything else turns pitch black. Static camera perspective, no zoom or pan.">
-        <div class="video-container">
-            <video loading="lazy" autoplay loop muted playsinline src="mp4/keypoint_localization.mp4"></video>
+    <div class="overview-container">
+      <div class="overview-column">
+        <p class="overview-title perception-color">Perception</p>
+        <div class="overview-videos">
+          <div
+            class="video-wrapper"
+            title="Add a bright blue dot at the tip of the branch on which the macaw is sitting. The macaw’s eye turns bright red. Everything else turns pitch black. Static camera perspective, no zoom or pan."
+          >
+            <video autoplay loop muted playsinline preload="auto" src="mp4/keypoint_localization.mp4"></video>
+          </div>
+          <div
+            class="video-wrapper"
+            title="The blue ball instantly begins to glow. Static camera perspective, no zoom no pan no movement no dolly no rotation."
+          >
+            <video autoplay loop muted playsinline preload="auto" src="mp4/conjunctive_search.mp4"></video>
+          </div>
         </div>
-    </div>
-    <!-- Col 2: Modeling -->
-    <div class="video-cell-wrapper" title="The hand lets go of the object. Static camera, no pan, no zoom, no dolly.">
-        <div class="video-container">
-            <video loading="lazy" autoplay loop muted playsinline src="mp4/buoyancy_bottle_cap.mp4"></video>
+      </div>
+      <div class="overview-column">
+        <p class="overview-title modeling-color">Modeling</p>
+        <div class="overview-videos">
+          <div
+            class="video-wrapper"
+            title="The hand lets go of the object. Static camera, no pan, no zoom, no dolly."
+          >
+            <video autoplay loop muted playsinline preload="auto" src="mp4/buoyancy_bottle_cap.mp4"></video>
+          </div>
+          <div
+            class="video-wrapper"
+            title="The camera zooms in to give a close up of the person looking out the window, then zooms back out to return to the original view."
+          >
+            <video autoplay loop muted playsinline preload="auto" src="mp4/memory_of_world_states.mp4"></video>
+          </div>
         </div>
-    </div>
-    <!-- Col 3: Manipulation -->
-    <div class="video-cell-wrapper" title="Use common sense and have the two robot hands attached to robot arms open the jar, like how a human would.">
-        <div class="video-container">
-            <video loading="lazy" autoplay loop muted playsinline src="mp4/robot_jar_opening.mp4"></video>
+      </div>
+      <div class="overview-column">
+        <p class="overview-title manipulation-color">Manipulation</p>
+        <div class="overview-videos">
+          <div
+            class="video-wrapper"
+            title="Use common sense and have the two robot hands attached to robot arms open the jar, like how a human would."
+          >
+            <video autoplay loop muted playsinline preload="auto" src="mp4/robot_jar_opening.mp4"></video>
+          </div>
+          <div
+            class="video-wrapper"
+            title="The knight turns to face to the right and drops on one knee, lifting the shield above his head to protect himself and resting the hilt of his weapon on the ground."
+          >
+            <video autoplay loop muted playsinline preload="auto" src="mp4/reposing.mp4"></video>
+          </div>
         </div>
-    </div>
-    <!-- Col 4: Reasoning -->
-    <div class="video-cell-wrapper" title="“Without crossing any black boundary, the grey mouse from the corner skillfully navigates the maze by walking around until it finds the yellow cheese.">
-        <div class="video-container">
-            <video loading="lazy" autoplay loop muted playsinline src="mp4/mouse_maze.mp4"></video>
+      </div>
+      <div class="overview-column">
+        <p class="overview-title reasoning-color">Reasoning</p>
+        <div class="overview-videos">
+          <div
+            class="video-wrapper"
+            title="“Without crossing any black boundary, the grey mouse from the corner skillfully navigates the maze by walking around until it finds the yellow cheese."
+          >
+            <video autoplay loop muted playsinline preload="auto" src="mp4/mouse_maze.mp4"></video>
+          </div>
+          <div
+            class="video-wrapper"
+            title="The robot drives to the blue area. Static camera perspective, no movement no zoom no scan no pan."
+          >
+            <video autoplay loop muted playsinline preload="auto" src="mp4/robot_navigation.mp4"></video>
+          </div>
         </div>
-    </div>
-    <!-- Row 2 -->
-    <!-- Col 1: Perception -->
-    <div class="video-cell-wrapper" title="The blue ball instantly begins to glow. Static camera perspective, no zoom no pan no movement no dolly no rotation.">
-        <div class="video-container">
-            <video loading="lazy" autoplay loop muted playsinline src="mp4/conjunctive_search.mp4"></video>
-        </div>
-    </div>
-    <!-- Col 2: Modeling -->
-    <div class="video-cell-wrapper" title="The camera zooms in to give a close up of the person looking out the window, then zooms back out to return to the original view.">
-        <div class="video-container">
-            <video loading="lazy" autoplay loop muted playsinline src="mp4/memory_of_world_states.mp4"></video>
-        </div>
-    </div>
-    <!-- Col 3: Manipulation -->
-    <div class="video-cell-wrapper" title="The knight turns to face to the right and drops on one knee, lifting the shield above his head to protect himself and resting the hilt of his weapon on the ground.">
-        <div class="video-container">
-            <video loading="lazy" autoplay loop muted playsinline src="mp4/reposing.mp4"></video>
-        </div>
-    </div>
-    <!-- Col 4: Reasoning -->
-    <div class="video-cell-wrapper" title="The robot drives to the blue area. Static camera perspective, no movement no zoom no scan no pan.">
-        <div class="video-container">
-            <video loading="lazy" autoplay loop muted playsinline src="mp4/robot_navigation.mp4"></video>
-        </div>
-    </div>
-</div>
-<div class="content-wrapper"> <!-- Re-wrap paragraph -->
-    <!-- REMOVED <p> tag -->
-
-    <!-- Abstract -->
-    <div class="section-wrapper">
-      <h2>Abstract</h2>
-      <p style="text-align: justify;">
-      The remarkable zero-shot capabilities of Large Language Models (LLMs) have propelled natural language processing from task-specific models to unified, generalist foundation models. This transformation emerged from simple primitives: large, generative models trained on web-scale data. Curiously, the same primitives apply to today's generative video models. Could video models be on a trajectory towards general-purpose vision understanding, much like LLMs developed general-purpose language understanding?<br>
-	We demonstrate that Veo 3 can zero-shot solve a broad variety of tasks it wasn't explicitly trained for: segmenting objects, detecting edges, editing images, understanding physical properties, recognizing object affordances, simulating tool use, and much more. These abilities to perceive, model, and manipulate the visual world enable early forms of visual reasoning like maze and symmetry solving. Veo 3's emergent zero-shot capabilities indicate that video models are on a path to becoming unified, generalist vision foundation models.
-      </p>
+      </div>
     </div>
 
+    <div class="content-wrapper">
+      <div class="text-section">
+        <h2>Abstract</h2>
+        <p>
+          The remarkable zero-shot capabilities of Large Language Models (LLMs) have propelled
+          natural language processing from task-specific models to unified, generalist foundation
+          models. This transformation emerged from simple primitives: large, generative models
+          trained on web-scale data. Curiously, the same primitives apply to today's generative
+          video models. Could video models be on a trajectory towards general-purpose vision
+          understanding, much like LLMs developed general-purpose language understanding?<br />
+          We demonstrate that Veo 3 can zero-shot solve a broad variety of tasks it wasn't
+          explicitly trained for: segmenting objects, detecting edges, editing images, understanding
+          physical properties, recognizing object affordances, simulating tool use, and much more.
+          These abilities to perceive, model, and manipulate the visual world enable early forms of
+          visual reasoning like maze and symmetry solving. Veo 3's emergent zero-shot capabilities
+          indicate that video models are on a path to becoming unified, generalist vision foundation
+          models.
+        </p>
+      </div>
 
-<div id="podcast-section" class="section-wrapper podcast-center">
-  <h2>Podcast</h2>
-  <p>
-    On a run and want to get a gist of our paper? Listen to the following podcast!
-  </p>
-  <audio controls>
-    <p>Listen to this episode generated by NotebookLM</p>
-    <source src="podcast/podcast.mp4" type="audio/mpeg">
-    Your browser does not support the audio element.
-  </audio>
-</div>
+      <div id="podcast-section" class="text-section">
+        <h2>Podcast</h2>
+        <p>On a run and want to get a gist of our paper? Listen to the following podcast!</p>
+        <audio controls src="podcast/podcast.mp4">
+          Your browser does not support the audio element.
+        </audio>
+      </div>
+    </div>
 
-</div> <!-- END of content-wrapper -->
-
-
-<!-- MODIFIED: Video Sections -->
-<h2 class="section-header perception-header">Perception</h2>
-<div class="video-grid">
-    <div class="video-cell-wrapper" title="All edges in this image become more salient by transforming into black outlines. Then, all objects fade away, with just the edges remaining on a white background. Static camera perspective, no zoom or pan.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/edge_detection.mp4"></video>
-        </div>
+    <h2 class="section-header perception-color">Perception</h2>
+    <div class="video-grid">
+      <div
+        class="video-wrapper"
+        title="All edges in this image become more salient by transforming into black outlines. Then, all objects fade away, with just the edges remaining on a white background. Static camera perspective, no zoom or pan."
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/edge_detection.mp4"></video>
         <p class="video-title">Edge detection</p>
-    </div>
-    <div class="video-cell-wrapper" title="Create an animation of instance segmentation being performed on this photograph: each distinct
+      </div>
+      <div
+        class="video-wrapper"
+        title="Create an animation of instance segmentation being performed on this photograph: each distinct
 entity is overlaid in a different flat color.
 Scene:
 • The animation starts from the provided, unaltered photograph.
@@ -601,409 +522,567 @@ Camera:
 • No pan.
 • No rotation.
 • No zoom.
-• No glitches or artifacts.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/segmentation.mp4"></video>
-        </div>
+• No glitches or artifacts."
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/segmentation.mp4"></video>
         <p class="video-title">Segmentation</p>
-    </div>
-    <div class="video-cell-wrapper" title="Add a bright blue dot at the tip of the branch on which the macaw is sitting. The macaw's eye turns bright red. Everything else turns pitch black. Static camera perspective, no zoom or pan.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/keypoint_localization.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="Add a bright blue dot at the tip of the branch on which the macaw is sitting. The macaw's eye turns bright red. Everything else turns pitch black. Static camera perspective, no zoom or pan."
+      >
+        <video
+          loading="lazy"
+          muted
+          playsinline
+          controls
+          src="mp4/keypoint_localization.mp4"
+        ></video>
         <p class="video-title">Keypoint localization</p>
-    </div>
-    <div class="video-cell-wrapper" title="Perform superresolution on this image. Static camera perspective, no zoom or pan.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/superresolution.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="Perform superresolution on this image. Static camera perspective, no zoom or pan."
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/superresolution.mp4"></video>
         <p class="video-title">Super-resolution</p>
-    </div>
-    <div class="video-cell-wrapper" title="Unblur image including background. Static camera perspective, no zoom or pan.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/deblurring.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="Unblur image including background. Static camera perspective, no zoom or pan."
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/deblurring.mp4"></video>
         <p class="video-title">Blind deblurring</p>
-    </div>
-    <div class="video-cell-wrapper" title="Remove the noise from this image. Static camera perspective, no zoom or pan.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/denoising.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="Remove the noise from this image. Static camera perspective, no zoom or pan."
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/denoising.mp4"></video>
         <p class="video-title">Blind denoising</p>
-    </div>
-    <div class="video-cell-wrapper" title="Fully restore the light in this image. Static camera perspective, no zoom or pan.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/low_light_enhancement.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="Fully restore the light in this image. Static camera perspective, no zoom or pan."
+      >
+        <video
+          loading="lazy"
+          muted
+          playsinline
+          controls
+          src="mp4/low_light_enhancement.mp4"
+        ></video>
         <p class="video-title">Low-light enhancement</p>
-    </div>
-    <div class="video-cell-wrapper" title="The blue ball instantly begins to glow. Static camera perspective, no zoom no pan no movement no dolly no rotation.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/conjunctive_search.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="The blue ball instantly begins to glow. Static camera perspective, no zoom no pan no movement no dolly no rotation."
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/conjunctive_search.mp4"></video>
         <p class="video-title">Conjunctive search / binding problem</p>
-    </div>
-    <div class="video-cell-wrapper" title="Static camera perspective.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/dalmatian.mp4"></video>
-        </div>
+      </div>
+      <div class="video-wrapper" title="Static camera perspective.">
+        <video loading="lazy" muted playsinline controls src="mp4/dalmatian.mp4"></video>
         <p class="video-title">Dalmatian illusion understanding</p>
-    </div>
-    <div class="video-cell-wrapper" title="Transform the animal in this image into a sketch of the animal surrounded by its family.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/texture_shape.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="Transform the animal in this image into a sketch of the animal surrounded by its family."
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/texture_shape.mp4"></video>
         <p class="video-title">Shape cue-conflict understanding</p>
-    </div>
-    <div class="video-cell-wrapper" title="The patterns transform into objects.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/rorschach.mp4"></video>
-        </div>
+      </div>
+      <div class="video-wrapper" title="The patterns transform into objects.">
+        <video loading="lazy" muted playsinline controls src="mp4/rorschach.mp4"></video>
         <p class="video-title">Rorschach blot interpretation</p>
+      </div>
     </div>
-</div>
 
-<h2 class="section-header modeling-header">Modeling</h2>
-<div class="video-grid">
-    <div class="video-cell-wrapper" title="The bunsen burner at the bottom turns on. Sped up time lapse. Static camera, no pan, no zoom, no dolly.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/material_properties_flammable.mp4"></video>
-        </div>
+    <h2 class="section-header modeling-color">Modeling</h2>
+    <div class="video-grid">
+      <div
+        class="video-wrapper"
+        title="The bunsen burner at the bottom turns on. Sped up time lapse. Static camera, no pan, no zoom, no dolly."
+      >
+        <video
+          loading="lazy"
+          muted
+          playsinline
+          controls
+          src="mp4/material_properties_flammable.mp4"
+        ></video>
         <p class="video-title">Material properties (flammability)</p>
-    </div>
-    <div class="video-cell-wrapper" title="A person picks up the vase and puts it back on the table in a sideways orientation. Static camera, no pan, no zoom, no dolly.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/physics_hard_body_transform.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="A person picks up the vase and puts it back on the table in a sideways orientation. Static camera, no pan, no zoom, no dolly."
+      >
+        <video
+          loading="lazy"
+          muted
+          playsinline
+          controls
+          src="mp4/physics_hard_body_transform.mp4"
+        ></video>
         <p class="video-title">Rigid body transform</p>
-    </div>
-    <div class="video-cell-wrapper" title="A person drapes a thin silk scarf over the vase. Static camera, no pan, no zoom, no dolly.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/physics_soft_body_transform.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="A person drapes a thin silk scarf over the vase. Static camera, no pan, no zoom, no dolly."
+      >
+        <video
+          loading="lazy"
+          muted
+          playsinline
+          controls
+          src="mp4/physics_soft_body_transform.mp4"
+        ></video>
         <p class="video-title">Soft body transform</p>
-    </div>
-    <div class="video-cell-wrapper" title="The objects fall due to gravity. Static camera, no pan, no zoom, no dolly.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/gravity_air_resistance_earth.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="The objects fall due to gravity. Static camera, no pan, no zoom, no dolly."
+      >
+        <video
+          loading="lazy"
+          muted
+          playsinline
+          controls
+          src="mp4/gravity_air_resistance_earth.mp4"
+        ></video>
         <p class="video-title">Gravity (earth)</p>
-    </div>
-    <div class="video-cell-wrapper" title="The objects fall down on the moon due to gravity. Static camera, no pan, no zoom, no dolly.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/gravity_air_resistance_moon.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="The objects fall down on the moon due to gravity. Static camera, no pan, no zoom, no dolly."
+      >
+        <video
+          loading="lazy"
+          muted
+          playsinline
+          controls
+          src="mp4/gravity_air_resistance_moon.mp4"
+        ></video>
         <p class="video-title">Gravity (moon)</p>
-    </div>
-    <div class="video-cell-wrapper" title="The hand lets go of the object. Static camera, no pan, no zoom, no dolly.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/buoyancy_bottle_cap.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="The hand lets go of the object. Static camera, no pan, no zoom, no dolly."
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/buoyancy_bottle_cap.mp4"></video>
         <p class="video-title">Buoyancy (bottle cap)</p>
-    </div>
-    <div class="video-cell-wrapper" title="The hand lets go of the object. Static camera, no pan, no zoom, no dolly.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/buoyancy_rock.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="The hand lets go of the object. Static camera, no pan, no zoom, no dolly."
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/buoyancy_rock.mp4"></video>
         <p class="video-title">Buoyancy (rock)</p>
-    </div>
-    <div class="video-cell-wrapper" title="A hand quickly removes each of the items in this image, one at a time.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/visual_jenga.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="A hand quickly removes each of the items in this image, one at a time."
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/visual_jenga.mp4"></video>
         <p class="video-title">Visual Jenga</p>
-    </div>
-    <div class="video-cell-wrapper" title="A person puts all the objects that can fit in the backpack inside of it. Static camera, no pan, no zoom, no dolly.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/object_packing.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="A person puts all the objects that can fit in the backpack inside of it. Static camera, no pan, no zoom, no dolly."
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/object_packing.mp4"></video>
         <p class="video-title">Object packing</p>
-    </div>
-    <div class="video-cell-wrapper" title="A giant glass sphere rolls through the room. Static camera, no pan, no zoom, no dolly.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/material_optics_glass.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="A giant glass sphere rolls through the room. Static camera, no pan, no zoom, no dolly."
+      >
+        <video
+          loading="lazy"
+          muted
+          playsinline
+          controls
+          src="mp4/material_optics_glass.mp4"
+        ></video>
         <p class="video-title">Material optics (glass)</p>
-    </div>
-    <div class="video-cell-wrapper" title="A giant mirror-polish metal sphere rolls through the room. Static camera, no pan, no zoom, no dolly.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/material_optics_mirror.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="A giant mirror-polish metal sphere rolls through the room. Static camera, no pan, no zoom, no dolly."
+      >
+        <video
+          loading="lazy"
+          muted
+          playsinline
+          controls
+          src="mp4/material_optics_mirror.mp4"
+        ></video>
         <p class="video-title">Material optics (mirror)</p>
-    </div>
-    <div class="video-cell-wrapper" title="The spotlight on the left changes color to green, and the spotlight on the right changes color to blue.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/color_mixing_additive.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="The spotlight on the left changes color to green, and the spotlight on the right changes color to blue."
+      >
+        <video
+          loading="lazy"
+          muted
+          playsinline
+          controls
+          src="mp4/color_mixing_additive.mp4"
+        ></video>
         <p class="video-title">Color mixing (additive)</p>
-    </div>
-    <div class="video-cell-wrapper" title="A paintbrush mixes these colors together thoroughly until they blend completely. Static camera, no pan, no zoom.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/color_mixing_subtractive.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="A paintbrush mixes these colors together thoroughly until they blend completely. Static camera, no pan, no zoom."
+      >
+        <video
+          loading="lazy"
+          muted
+          playsinline
+          controls
+          src="mp4/color_mixing_subtractive.mp4"
+        ></video>
         <p class="video-title">Color mixing (subtractive)</p>
-    </div>
-    <div class="video-cell-wrapper" title="A person puts all the kids toys in the bucket. Static camera, no pan, no zoom, no dolly.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/categorizing_objects.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="A person puts all the kids toys in the bucket. Static camera, no pan, no zoom, no dolly."
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/categorizing_objects.mp4"></video>
         <p class="video-title">Categorizing objects</p>
-    </div>
-    <div class="video-cell-wrapper" title="The background of the grid cell with the same symbol as the one indicated on the right turns red. All other grid cells remain unchanged. After that, a spinning color wheel appears in the top right corner.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/omniglot_recognition.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="The background of the grid cell with the same symbol as the one indicated on the right turns red. All other grid cells remain unchanged. After that, a spinning color wheel appears in the top right corner."
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/omniglot_recognition.mp4"></video>
         <p class="video-title">Omniglot (recognition)</p>
-    </div>
-    <div class="video-cell-wrapper" title="The page is filled line-by-line with hand-written practice variations of the symbol.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/omniglot_generation.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="The page is filled line-by-line with hand-written practice variations of the symbol."
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/omniglot_generation.mp4"></video>
         <p class="video-title">Omniglot (generation)</p>
-    </div>
-    <div class="video-cell-wrapper" title="Stroke-by-stroke, a replica of the symbol is drawn on the right.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/omniglot_parsing.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="Stroke-by-stroke, a replica of the symbol is drawn on the right."
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/omniglot_parsing.mp4"></video>
         <p class="video-title">Omniglot (parsing)</p>
-    </div>
-    <div class="video-cell-wrapper" title="The camera zooms in to give a close up of the person looking out the window, then zooms back out to return to the original view.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/memory_of_world_states.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="The camera zooms in to give a close up of the person looking out the window, then zooms back out to return to the original view."
+      >
+        <video
+          loading="lazy"
+          muted
+          playsinline
+          controls
+          src="mp4/memory_of_world_states.mp4"
+        ></video>
         <p class="video-title">Memory of world states</p>
+      </div>
     </div>
-</div>
 
-<h2 class="section-header manipulation-header">Manipulation</h2>
-<div class="video-grid">
-    <div class="video-cell-wrapper" title="The background changes to white. Static camera perspective, no zoom or pan.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/background_removal.mp4"></video>
-        </div>
+    <h2 class="section-header manipulation-color">Manipulation</h2>
+    <div class="video-grid">
+      <div
+        class="video-wrapper"
+        title="The background changes to white. Static camera perspective, no zoom or pan."
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/background_removal.mp4"></video>
         <p class="video-title">Background removal</p>
-    </div>
-    <div class="video-cell-wrapper" title="The scene transforms into the style of a Hundertwasser painting, without changing perspective or orientation; the macaw does not move. Static camera perspective, no zoom or pan.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/style_transfer_hundertwasser.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="The scene transforms into the style of a Hundertwasser painting, without changing perspective or orientation; the macaw does not move. Static camera perspective, no zoom or pan."
+      >
+        <video
+          loading="lazy"
+          muted
+          playsinline
+          controls
+          src="mp4/style_transfer_hundertwasser.mp4"
+        ></video>
         <p class="video-title">Style transfer</p>
-    </div>
-    <div class="video-cell-wrapper" title="Perform colorization on this image. Static camera perspective, no zoom or pan.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/colorization.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="Perform colorization on this image. Static camera perspective, no zoom or pan."
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/colorization.mp4"></video>
         <p class="video-title">Colorization</p>
-    </div>
-    <div class="video-cell-wrapper" title="The white triangles become smaller and smaller, then disappear altogether. Static camera perspective, no zoom or pan.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/inpainting.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="The white triangles become smaller and smaller, then disappear altogether. Static camera perspective, no zoom or pan."
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/inpainting.mp4"></video>
         <p class="video-title">Inpainting</p>
-    </div>
-    <div class="video-cell-wrapper" title="Rapidly zoom out of this static image, revealing what's around it. The camera just zooms back, while the scene itself and everything in it does not move or change at all, it's a static image.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/outpainting.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="Rapidly zoom out of this static image, revealing what's around it. The camera just zooms back, while the scene itself and everything in it does not move or change at all, it's a static image."
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/outpainting.mp4"></video>
         <p class="video-title">Outpainting</p>
-    </div>
-    <div class="video-cell-wrapper" title="Animation of the text rapidly changing so that it is made out of different types of candy (top left text) and pretzel sticks (bottom right text). Static camera perspective, no zoom or pan.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/text_manipulation.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="Animation of the text rapidly changing so that it is made out of different types of candy (top left text) and pretzel sticks (bottom right text). Static camera perspective, no zoom or pan."
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/text_manipulation.mp4"></video>
         <p class="video-title">Text manipulation</p>
-    </div>
-    <div class="video-cell-wrapper" title="Changes happen instantly.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/doodle_editing.mp4"></video>
-        </div>
+      </div>
+      <div class="video-wrapper" title="Changes happen instantly.">
+        <video loading="lazy" muted playsinline controls src="mp4/doodle_editing.mp4"></video>
         <p class="video-title">Image editing with doodles</p>
-    </div>
-    <div class="video-cell-wrapper" title="A smooth animation blends the zebra naturally into the scene, removing the background of the zebra image, so that the angle, lighting, and shading look realistic. The final scene perfectly incorporates the zebra into the scene.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/scene_composition.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="A smooth animation blends the zebra naturally into the scene, removing the background of the zebra image, so that the angle, lighting, and shading look realistic. The final scene perfectly incorporates the zebra into the scene."
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/scene_composition.mp4"></video>
         <p class="video-title">Scene composition</p>
-    </div>
-    <div class="video-cell-wrapper" title="Create a smooth, realistic animation where the camera seems to rotate around the object showing the object from all the sides. Do not change anything else. No zoom. No pan.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/novel-view-synthesis.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="Create a smooth, realistic animation where the camera seems to rotate around the object showing the object from all the sides. Do not change anything else. No zoom. No pan."
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/novel-view-synthesis.mp4"></video>
         <p class="video-title">Novel view synthesis</p>
-    </div>
-    <div class="video-cell-wrapper" title="The knight turns to face to the right and drops on one knee, lifting the shield above his head to protect himself and resting the hilt of his weapon on the ground.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/reposing.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="The knight turns to face to the right and drops on one knee, lifting the shield above his head to protect himself and resting the hilt of his weapon on the ground."
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/reposing.mp4"></video>
         <p class="video-title">3D-aware reposing</p>
-    </div>
-    <div class="video-cell-wrapper" title="A magical spell smoothly transforms the structure of the teacup into a mouse.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/transfiguration.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="A magical spell smoothly transforms the structure of the teacup into a mouse."
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/transfiguration.mp4"></video>
         <p class="video-title">Transfiguration</p>
-    </div>
-    <div class="video-cell-wrapper" title="Turn this selfie into a professional headshot for LinkedIn.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/professional_headshot.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="Turn this selfie into a professional headshot for LinkedIn."
+      >
+        <video
+          loading="lazy"
+          muted
+          playsinline
+          controls
+          src="mp4/professional_headshot.mp4"
+        ></video>
         <p class="video-title">Professional headshot</p>
-    </div>
-    <div class="video-cell-wrapper" title="Use common sense and have the two robot hands attached to robot arms open the jar, like how a human would.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/robot_jar_opening.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="Use common sense and have the two robot hands attached to robot arms open the jar, like how a human would."
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/robot_jar_opening.mp4"></video>
         <p class="video-title">Dexterous manipulation (jar)</p>
-    </div>
-    <div class="video-cell-wrapper" title="Use common sense and have the two robot hands attached to robot arms throw the ball in the air, the ball goes up off the screen, hands move to positions to catch the ball, and catch the falling ball, like how a human would.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/robot_throw_and_catch.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="Use common sense and have the two robot hands attached to robot arms throw the ball in the air, the ball goes up off the screen, hands move to positions to catch the ball, and catch the falling ball, like how a human would."
+      >
+        <video
+          loading="lazy"
+          muted
+          playsinline
+          controls
+          src="mp4/robot_throw_and_catch.mp4"
+        ></video>
         <p class="video-title">Dexterous manipulation (throw/catch)</p>
-    </div>
-    <div class="video-cell-wrapper" title="A human hand holds two metal Baoding balls. The fingers, including the thumb, index, and middle finger, skillfully manipulate the balls, causing them to rotate smoothly like two planets orbiting around each other and continuously in the palm, one ball circling the other in a fluid motion.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/baoding-balls.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="A human hand holds two metal Baoding balls. The fingers, including the thumb, index, and middle finger, skillfully manipulate the balls, causing them to rotate smoothly like two planets orbiting around each other and continuously in the palm, one ball circling the other in a fluid motion."
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/baoding-balls.mp4"></video>
         <p class="video-title">Dexterous manipulation (baoding balls)</p>
-    </div>
-    <div class="video-cell-wrapper" title="The robot hands mounted on robot arms pick up the hammer, naturally like how a human would.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/affordance.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="The robot hands mounted on robot arms pick up the hammer, naturally like how a human would."
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/affordance.mp4"></video>
         <p class="video-title">Affordance recognition</p>
-    </div>
-    <div class="video-cell-wrapper" title="A person draws a square. Static camera, no pan, no zoom, no dolly.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/drawing.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="A person draws a square. Static camera, no pan, no zoom, no dolly."
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/drawing.mp4"></video>
         <p class="video-title">Drawing</p>
-    </div>
-    <div class="video-cell-wrapper" title="A montage clearly showing each step to roll a burrito.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/visual_instruction.mp4"></video>
-        </div>
+      </div>
+      <div class="video-wrapper" title="A montage clearly showing each step to roll a burrito.">
+        <video loading="lazy" muted playsinline controls src="mp4/visual_instruction.mp4"></video>
         <p class="video-title">Visual instruction (burrito)</p>
+      </div>
     </div>
-</div>
 
-<h2 class="section-header reasoning-header">Reasoning</h2>
-<div class="video-grid">
-    <div class="video-cell-wrapper" title="Starting from the blue well, an unlimited supply of blue water moves through the connected channel system without spilling into the black area.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/graph_traversal.mp4"></video>
-        </div>
+    <h2 class="section-header reasoning-color">Reasoning</h2>
+    <div class="video-grid">
+      <div
+        class="video-wrapper"
+        title="Starting from the blue well, an unlimited supply of blue water moves through the connected channel system without spilling into the black area."
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/graph_traversal.mp4"></video>
         <p class="video-title">Graph traversal</p>
-    </div>
-    <div class="video-cell-wrapper" title="From the blue water basin, an unlimited supply of water flows at constant speed into the cave system until all caves are filled. Static camera perspective, no zoom or pan.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/tree-bfs.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="From the blue water basin, an unlimited supply of water flows at constant speed into the cave system until all caves are filled. Static camera perspective, no zoom or pan."
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/tree-bfs.mp4"></video>
         <p class="video-title">Tree BFS</p>
-    </div>
-    <div class="video-cell-wrapper" title="Draw the figure that completes the pattern in the rightmost box. The images in the boxes are static. Do not modify the existing images, only draw in the empty box. Static camera, no zoom, no pan, no dolly.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/raven_matrix_dots.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="Draw the figure that completes the pattern in the rightmost box. The images in the boxes are static. Do not modify the existing images, only draw in the empty box. Static camera, no zoom, no pan, no dolly."
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/raven_matrix_dots.mp4"></video>
         <p class="video-title">Sequence (dots)</p>
-    </div>
-    <div class="video-cell-wrapper" title="Draw the figure that completes the pattern in the rightmost box. The images in the boxes are static. Do not modify the existing images, only draw in the empty box. Static camera, no zoom, no pan, no dolly.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/raven_matrix_arrows.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="Draw the figure that completes the pattern in the rightmost box. The images in the boxes are static. Do not modify the existing images, only draw in the empty box. Static camera, no zoom, no pan, no dolly."
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/raven_matrix_arrows.mp4"></video>
         <p class="video-title">Sequence (arrows)</p>
-    </div>
-    <div class="video-cell-wrapper" title="Draw the figure that completes the pattern in the rightmost box. The images in the boxes are static. Do not modify the existing images, only draw in the empty box. Static camera, no zoom, no pan, no dolly.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/raven_matrix_circle_size.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="Draw the figure that completes the pattern in the rightmost box. The images in the boxes are static. Do not modify the existing images, only draw in the empty box. Static camera, no zoom, no pan, no dolly."
+      >
+        <video
+          loading="lazy"
+          muted
+          playsinline
+          controls
+          src="mp4/raven_matrix_circle_size.mp4"
+        ></video>
         <p class="video-title">Sequence (circles)</p>
-    </div>
-    <div class="video-cell-wrapper" title="Draw the figure that completes the pattern in the rightmost box. The images in the boxes are static. Do not modify the existing images, only draw in the empty box. Static camera, no zoom, no pan, no dolly.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/raven_matrix_square_size.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="Draw the figure that completes the pattern in the rightmost box. The images in the boxes are static. Do not modify the existing images, only draw in the empty box. Static camera, no zoom, no pan, no dolly."
+      >
+        <video
+          loading="lazy"
+          muted
+          playsinline
+          controls
+          src="mp4/raven_matrix_square_size.mp4"
+        ></video>
         <p class="video-title">Sequence (squares)</p>
-    </div>
-    <div class="video-cell-wrapper" title="Draw three curves, one connecting each pair of circles of the same color:">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/connecting_colors.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="Draw three curves, one connecting each pair of circles of the same color:"
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/connecting_colors.mp4"></video>
         <p class="video-title">Connecting colors</p>
-    </div>
-    <div class="video-cell-wrapper" title="The scene shows three colored pieces, and a wooden panel with three holes. Each colored piece fits into one and only one hole. A hand grabs each colored piece and puts it into an empty hole that has the exact same shape - if it doesn't fit, the hand tries another hole. All the objects must be placed in their respective holes.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/shape-fitting.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="The scene shows three colored pieces, and a wooden panel with three holes. Each colored piece fits into one and only one hole. A hand grabs each colored piece and puts it into an empty hole that has the exact same shape - if it doesn't fit, the hand tries another hole. All the objects must be placed in their respective holes."
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/shape-fitting.mp4"></video>
         <p class="video-title">Shape fitting</p>
-    </div>
-    <div class="video-cell-wrapper" title="The video starts with some numbered bubbles. The bubbles pop and disappear one at a time, in numeric order, starting from the one with the smallest number.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/sorting_numbers.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="The video starts with some numbered bubbles. The bubbles pop and disappear one at a time, in numeric order, starting from the one with the smallest number."
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/sorting_numbers.mp4"></video>
         <p class="video-title">Sorting numbers</p>
-    </div>
-    <div class="video-cell-wrapper" title="A person retrieves the walnut from the aquarium.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/tool_use.mp4"></video>
-        </div>
+      </div>
+      <div class="video-wrapper" title="A person retrieves the walnut from the aquarium.">
+        <video loading="lazy" muted playsinline controls src="mp4/tool_use.mp4"></video>
         <p class="video-title">Tool use</p>
-    </div>
-    <div class="video-cell-wrapper" title="Create a static, smooth, animation that solves the given 4x4 sudoku. Enter the missing numbers one by one. Do not change anything else in the picture. Only fill the numbers in the empty cells so the sudoku is solved properly. A cursor moves and fills the correct number in the empty boxes.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/sudoku_completion.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="Create a static, smooth, animation that solves the given 4x4 sudoku. Enter the missing numbers one by one. Do not change anything else in the picture. Only fill the numbers in the empty cells so the sudoku is solved properly. A cursor moves and fills the correct number in the empty boxes."
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/sudoku_completion.mp4"></video>
         <p class="video-title">Simple sudoku completion</p>
-    </div>
-    <div class="video-cell-wrapper" title="The tap is turned on and water starts flowing rapidly filling the containers. Create a smooth, static animation showing the containers getting filled with water in the correct order.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/water-puzzle.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="The tap is turned on and water starts flowing rapidly filling the containers. Create a smooth, static animation showing the containers getting filled with water in the correct order."
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/water-puzzle.mp4"></video>
         <p class="video-title">Water puzzle solving</p>
-    </div>
-    <div class="video-cell-wrapper" title="Without crossing any black boundary, the grey mouse from the corner skillfully navigates the maze by walking around until it finds the yellow cheese.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/mouse_maze.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="Without crossing any black boundary, the grey mouse from the corner skillfully navigates the maze by walking around until it finds the yellow cheese."
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/mouse_maze.mp4"></video>
         <p class="video-title">Maze solving (mouse)</p>
-    </div>
-    <div class="video-cell-wrapper" title="The robot drives to the blue area. Static camera perspective, no movement no zoom no scan no pan.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/robot_navigation.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="The robot drives to the blue area. Static camera perspective, no movement no zoom no scan no pan."
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/robot_navigation.mp4"></video>
         <p class="video-title">Robot navigation</p>
-    </div>
-    <div class="video-cell-wrapper" title="Modify the lower-right grid to adhere to the rule established by the other grids. You can fill cells, clear cells, or change a cell's color. Only modify the lower-right grid, don't modify any of the other grids. Static scene, no zoom, no pan, no dolly.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/rule_extrapolation.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="Modify the lower-right grid to adhere to the rule established by the other grids. You can fill cells, clear cells, or change a cell's color. Only modify the lower-right grid, don't modify any of the other grids. Static scene, no zoom, no pan, no dolly."
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/rule_extrapolation.mp4"></video>
         <p class="video-title">Rule extrapolation</p>
-    </div>
-    <div class="video-cell-wrapper" title="Create a smooth animation to generate the missing object in the lower right region and solve the visual analogy. The original three objects must remain still. Static shot, no zoom no pan no dolly.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/kiva_analogy_colour.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="Create a smooth animation to generate the missing object in the lower right region and solve the visual analogy. The original three objects must remain still. Static shot, no zoom no pan no dolly."
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/kiva_analogy_colour.mp4"></video>
         <p class="video-title">Analogy (color)</p>
-    </div>
-    <div class="video-cell-wrapper" title="Create a smooth animation to generate the missing object in the lower right region and solve the visual analogy. The original three objects must remain still. Static shot, no zoom no pan no dolly.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/kiva_analogy_resize.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="Create a smooth animation to generate the missing object in the lower right region and solve the visual analogy. The original three objects must remain still. Static shot, no zoom no pan no dolly."
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/kiva_analogy_resize.mp4"></video>
         <p class="video-title">Analogy (resize)</p>
-    </div>
-    <div class="video-cell-wrapper" title="Create a smooth animation to generate the missing object in the lower right region and solve the visual analogy. The original three objects must remain still. Static shot, no zoom no pan no dolly.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/kiva_analogy_reflect.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="Create a smooth animation to generate the missing object in the lower right region and solve the visual analogy. The original three objects must remain still. Static shot, no zoom no pan no dolly."
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/kiva_analogy_reflect.mp4"></video>
         <p class="video-title">Analogy (reflect)</p>
-    </div>
-    <div class="video-cell-wrapper" title="Create a smooth animation to generate the missing object in the lower right region and solve the visual analogy. The original three objects must remain still. Static shot, no zoom no pan no dolly.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/kiva_analogy_2Drotation.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="Create a smooth animation to generate the missing object in the lower right region and solve the visual analogy. The original three objects must remain still. Static shot, no zoom no pan no dolly."
+      >
+        <video
+          loading="lazy"
+          muted
+          playsinline
+          controls
+          src="mp4/kiva_analogy_2Drotation.mp4"
+        ></video>
         <p class="video-title">Analogy (rotate)</p>
-    </div>
-    <div class="video-cell-wrapper" title="Create a 2D animation based on the provided image of a maze. The red square slides smoothly
+      </div>
+      <div
+        class="video-wrapper"
+        title="Create a 2D animation based on the provided image of a maze. The red square slides smoothly
 along the white path, stopping perfectly on the green square. The red square never slides or crosses
 into the black areas of the maze. The camera is a static, top-down view showing the entire maze.
 Maze:
@@ -1020,13 +1099,14 @@ Camera:
 • Static camera.
 • No zoom.
 • No pan.
-• No glitches, noise, or artifacts.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/maze_5x5_square.mp4"></video>
-        </div>
+• No glitches, noise, or artifacts."
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/maze_5x5_square.mp4"></video>
         <p class="video-title">Maze (5x5)</p>
-    </div>
-    <div class="video-cell-wrapper" title="Create a 2D animation based on the provided image of a maze. The red square slides smoothly
+      </div>
+      <div
+        class="video-wrapper"
+        title="Create a 2D animation based on the provided image of a maze. The red square slides smoothly
 along the white path, stopping perfectly on the green square. The red square never slides or crosses
 into the black areas of the maze. The camera is a static, top-down view showing the entire maze.
 Maze:
@@ -1043,13 +1123,14 @@ Camera:
 • Static camera.
 • No zoom.
 • No pan.
-• No glitches, noise, or artifacts.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/maze_7x7_square.mp4"></video>
-        </div>
+• No glitches, noise, or artifacts."
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/maze_7x7_square.mp4"></video>
         <p class="video-title">Maze (7x7)</p>
-    </div>
-    <div class="video-cell-wrapper" title="Create a 2D animation based on the provided image of a maze. The red square slides smoothly
+      </div>
+      <div
+        class="video-wrapper"
+        title="Create a 2D animation based on the provided image of a maze. The red square slides smoothly
 along the white path, stopping perfectly on the green square. The red square never slides or crosses
 into the black areas of the maze. The camera is a static, top-down view showing the entire maze.
 Maze:
@@ -1066,13 +1147,14 @@ Camera:
 • Static camera.
 • No zoom.
 • No pan.
-• No glitches, noise, or artifacts.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/maze_9x9_square.mp4"></video>
-        </div>
+• No glitches, noise, or artifacts."
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/maze_9x9_square.mp4"></video>
         <p class="video-title">Maze (9x9)</p>
-    </div>
-    <div class="video-cell-wrapper" title="Create a 2D animation based on the provided image of a maze. The red square slides smoothly
+      </div>
+      <div
+        class="video-wrapper"
+        title="Create a 2D animation based on the provided image of a maze. The red square slides smoothly
 along the white path, stopping perfectly on the green square. The red square never slides or crosses
 into the black areas of the maze. The camera is a static, top-down view showing the entire maze.
 Maze:
@@ -1089,101 +1171,84 @@ Camera:
 • Static camera.
 • No zoom.
 • No pan.
-• No glitches, noise, or artifacts.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/maze_irregular.mp4"></video>
-        </div>
+• No glitches, noise, or artifacts."
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/maze_irregular.mp4"></video>
         <p class="video-title">Maze (irregular)</p>
-    </div>
-     <div class="video-cell-wrapper" title="Instantly reflect this pattern along the central, vertical axis while keeping the existing colored
-pattern without modification. Static camera perspective, no zoom or pan.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/symmetry_shape.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="Instantly reflect this pattern along the central, vertical axis while keeping the existing colored
+pattern without modification. Static camera perspective, no zoom or pan."
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/symmetry_shape.mp4"></video>
         <p class="video-title">Symmetry (shape)</p>
-    </div>
-     <div class="video-cell-wrapper" title="Instantly reflect this pattern along the central, vertical axis while keeping the existing colored
-pattern without modification. Static camera perspective, no zoom or pan.">
-        <div class="video-container">
-            <video loading="lazy" muted playsinline controls src="mp4/symmetry_random.mp4"></video>
-        </div>
+      </div>
+      <div
+        class="video-wrapper"
+        title="Instantly reflect this pattern along the central, vertical axis while keeping the existing colored
+pattern without modification. Static camera perspective, no zoom or pan."
+      >
+        <video loading="lazy" muted playsinline controls src="mp4/symmetry_random.mp4"></video>
         <p class="video-title">Symmetry (random)</p>
+      </div>
     </div>
-</div>
-<!-- END MODIFIED: Video Sections -->
 
-
-<div class="content-wrapper"> <!-- Restart content wrapper for footer -->
-<div class="citation-section">
-  <h2>BibTeX</h2>
-  <div style="background: #f9f9f9; border: 1px solid #ccc; text-align: left; border-radius: 5px; padding: 1rem; position: relative;">
-    <pre id="citation-text" style="margin: 0; font-family: monospace; font-size: 0.9rem; white-space: pre-wrap; word-wrap: break-word;">
+    <div class="content-wrapper">
+      <div class="citation-section">
+        <h2>BibTeX</h2>
+        <div class="citation-box">
+          <pre id="citation-text" class="citation-pre">
 @article{wiedemer2025video,
   title={Video models are zero-shot learners and reasoners},
   author={Wiedemer, Thaddäus and Li, Yuxuan and Vicol, Paul and Gu, Shixiang Shane and Matarese, Nick and Swersky, Kevin and Kim, Been and Jaini, Priyank and Geirhos, Robert},
   journal={arXiv preprint arXiv:TBD},
   year={2025}
-}</pre>
-    <!-- <button onclick="copyCitation()" style="position: absolute; top: 10px; right: 10px; background: #007BFF; color: #fff; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer; font-size: 0.8rem;">
-      Copy
-    </button> -->
-    <button onclick="copyCitation()" style="
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        background: none; /* Remove background */
-        border: none;    /* Remove border */
-        padding: 0;      /* Remove padding */
-        cursor: pointer;
-        font-size: 1.5rem; /* Adjust icon size */
-        color: #ccc;  /* Set icon color */
-        /* Remove border-radius, font-size (for text), color (for text) as they are no longer relevant */
-        " title="Copy to clipboard">
-      <i class="fa-regular fa-copy"></i> <!-- Font Awesome copy icon -->
-    </button>
-  </div>
-</div>
+}</pre
+          >
+          <button onclick="copyCitation()" class="citation-button" title="Copy to clipboard">
+            <i class="fa-regular fa-copy"></i>
+          </button>
+        </div>
+      </div>
 
-<script>
-  function copyCitation() {
-    const citationText = document.getElementById("citation-text").innerText; // Get the citation text
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      // Modern method using Clipboard API
-      navigator.clipboard.writeText(citationText)
+      <script>
+        function copyCitation() {
+          const citationText = document.getElementById("citation-text").innerText; // Get the citation text
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            // Modern method using Clipboard API
+            navigator.clipboard
+              .writeText(citationText)
 
-        .catch(() => {
-          fallbackCopy(citationText);
-        });
-    } else {
-      // Fallback method
-      fallbackCopy(citationText);
-    }
-  }
+              .catch(() => {
+                fallbackCopy(citationText);
+              });
+          } else {
+            // Fallback method
+            fallbackCopy(citationText);
+          }
+        }
 
-  function fallbackCopy(text) {
-    // Create a temporary textarea element
-    const textArea = document.createElement("textarea");
-    textArea.value = text;
-    document.body.appendChild(textArea);
-    textArea.select();
-    try {
-      document.execCommand("copy"); // Fallback to execCommand
-    } catch (err) {
-      // Cannot use alert()
-      console.error("Failed to copy citation.");
-    }
-    document.body.removeChild(textArea); // Clean up
-  }
-</script>
+        function fallbackCopy(text) {
+          // Create a temporary textarea element
+          const textArea = document.createElement("textarea");
+          textArea.value = text;
+          document.body.appendChild(textArea);
+          textArea.select();
+          try {
+            document.execCommand("copy"); // Fallback to execCommand
+          } catch (err) {
+            // Cannot use alert()
+            console.error("Failed to copy citation.");
+          }
+          document.body.removeChild(textArea); // Clean up
+        }
+      </script>
 
-
-<!-- Footer Logo -->
-<footer>
-  <p>Thank you for visiting our project site!</p>
-  <img src="assets/gdm_logo.jpg" alt="logo" style="max-width: 250px; height: auto; margin-top: 1rem;">
-</footer>
-
-</div> <!-- END content-wrapper for footer -->
-
-</body>
+      <footer>
+        Thank you for visiting our project site!
+        <img src="assets/gdm_logo.jpg" alt="logo" style="height: 1rem; width: auto" />
+      </footer>
+    </div>
+  </body>
 </html>
