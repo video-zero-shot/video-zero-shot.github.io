@@ -39,6 +39,7 @@
         --modeling-color: #925bcf;
         --manipulation-color: #c440a7;
         --reasoning-color: #da2f77;
+        --failure-color: black;
       }
       .blue {
         color: var(--google-blue);
@@ -63,6 +64,9 @@
       }
       .reasoning-color {
         color: var(--reasoning-color);
+      }
+      .failure-color {
+        color: var(--failure-color);
       }
 
       body {
@@ -1194,6 +1198,235 @@ pattern without modification. Static camera perspective, no zoom or pan."
       </div>
     </div>
 
+    <h2 class="section-header failure-color" id="failure-toggle" style="cursor: pointer;">
+      Failure cases (click to expand) <span id="failure-arrow">▶</span>
+    </h2>
+    <div class="video-grid" id="failure-grid" style="display: none;">
+      <div
+        class="video-wrapper"
+        title="The image transitions to a depth-map of the scene: Darker colors represent pixels further from the camera, lighter colors represent pixels closer to the camera. The exact color map to use is provided on the right side of the image. Static scene, no pan, no zoom, no dolly."
+      >
+        <video loading="lazy" muted playsinline controls data-src="mp4/depth_failure_case.mp4"></video>
+        <p class="video-title">Monocular depth estimation</p>
+      </div>
+      <div
+        class="video-wrapper"
+        title="The image transitions to a surface-normal map of the scene: the red/green/blue color channel specify the direction of the surface-normal at each point, as illustrated on the right side of the image on a sphere. Static scene, no pan, no zoom, по dolly."
+      >
+        <video loading="lazy" muted playsinline controls data-src="mp4/normals_failure_case.mp4"></video>
+        <p class="video-title">Monocular surface normal estimation</p>
+      </div>
+      <div
+        class="video-wrapper"
+        title="The balls move in the direction indicated by the arrows. Balls without an arrow don't move. Static scene, no pan, no zoom, no dolly."
+      >
+        <video
+          loading="lazy"
+          muted
+          playsinline
+          controls
+          data-src="mp4/force_prompting_failure_case.mp4"
+        ></video>
+        <p class="video-title">Force prompting</p>
+      </div>
+      <div
+        class="video-wrapper"
+        title="Each car drives out of the frame following the indicated trajectory. Static camera, no zoom, no pan, no dolly."
+      >
+        <video
+          loading="lazy"
+          muted
+          playsinline
+          controls
+          data-src="mp4/motion_prompting_failure_case.mp4"
+        ></video>
+        <p class="video-title">Motion trajectory prompting</p>
+      </div>
+      <div class="video-wrapper" title="A knot is tied connecting these two rope ends.">
+        <video loading="lazy" muted playsinline controls data-src="mp4/knots_failure_case.mp4"></video>
+        <p class="video-title">Tying the knot</p>
+      </div>
+      <div
+        class="video-wrapper"
+        title="The path connecting the boy to the object starts glowing slowly. Nothing else changes. No zoom, no pan, no dolly."
+      >
+        <video
+          loading="lazy"
+          muted
+          playsinline
+          controls
+          data-src="mp4/connect-path_failure_case.mp4"
+        ></video>
+        <p class="video-title">Connect the path puzzle</p>
+      </div>
+      <div
+        class="video-wrapper"
+        title="Generate a static video animation using the provided letter grid. The task is to highlight the only 5-letter English word CHEAT, which may be oriented in any direction (horizontally, vertically, or diagonally). The animation should consist of a semi-transparent red rectangle with rounded corners smoothly fading into view, perfectly encapsulating the five letters of the word. The rectangle should have a subtle, soft glow. Do not change anything else in the image. The camera must remain locked in place with no movement. No zoom, no pan, no dolly."
+      >
+        <video
+          loading="lazy"
+          muted
+          playsinline
+          controls
+          data-src="mp4/letter-search_failure_case.mp4"
+        ></video>
+        <p class="video-title">Letter word search</p>
+      </div>
+      <div
+        class="video-wrapper"
+        title="Create a smooth animation where a red pen traces all existing edges in a continuous path without lifting the pen. All edges need to be traced. Do not visit any edge twice and do not lift the pen. No zoom, no pan."
+      >
+        <video
+          loading="lazy"
+          muted
+          playsinline
+          controls
+          data-src="mp4/Eulerian-path_failure_case.mp4"
+        ></video>
+        <p class="video-title">Eulerian path</p>
+      </div>
+      <div
+        class="video-wrapper"
+        title="A hand appears and solves the set of linear equations. It replaces the x, y, z matrix with their correct values that solves the equation. Do not change anything else."
+      >
+        <video
+          loading="lazy"
+          muted
+          playsinline
+          controls
+          data-src="mp4/linear-equations_failure_case.mp4"
+        ></video>
+        <p class="video-title">Solving linear equations</p>
+      </div>
+      <div
+        class="video-wrapper"
+        title="There are two images. The left image is different from the right image in 5 spots. Create a static, realistic, smooth animation where a cursor appears and points at each place where the left image is different from the right image. The cursor points one by one and only on the left image. Do not change anything in the right image. No pan. No zoom. No movement. Keep the image static."
+      >
+        <video
+          loading="lazy"
+          muted
+          playsinline
+          controls
+          data-src="mp4/spot-difference_failure_case.mp4"
+        ></video>
+        <p class="video-title">Spot the difference</p>
+      </div>
+      <div
+        class="video-wrapper"
+        title="Create a static, smooth, animation that solves the puzzle in the given image. The correct pattern should appear at the bottom right to solve the puzzle. Do not change anything else in the picture. No zoom, no pan, no dolly"
+      >
+        <video
+          loading="lazy"
+          muted
+          playsinline
+          controls
+          data-src="mp4/visual-iq-test_failure_case.mp4"
+        ></video>
+        <p class="video-title">Visual IQ test</p>
+      </div>
+      <div
+        class="video-wrapper"
+        title="The object falls. Static camera, no pan, no zoom, no dolly."
+      >
+        <video
+          loading="lazy"
+          muted
+          playsinline
+          controls
+          data-src="mp4/glass_falling_failure_case.mp4"
+        ></video>
+        <p class="video-title">Glass falling</p>
+      </div>
+      <div
+        class="video-wrapper"
+        title="The two objects collide in slow motion. Static camera, no pan, no zoom, no dolly."
+      >
+        <video
+          loading="lazy"
+          muted
+          playsinline
+          controls
+          data-src="mp4/collisions_failure_case.mp4"
+        ></video>
+        <p class="video-title">Collisions</p>
+      </div>
+      <div
+        class="video-wrapper"
+        title="A hand takes the fitting puzzle piece from the right, rotates it to be in the correct orientation, then puts it into the hole, completing the puzzle. Static scene, no pan, no zoom, no dolly."
+      >
+        <video
+          loading="lazy"
+          muted
+          playsinline
+          controls
+          data-src="mp4/jigsaw_puzzle_failure_case.mp4"
+        ></video>
+        <p class="video-title">Jigsaw puzzle</p>
+      </div>
+      <div
+        class="video-wrapper"
+        title="Slide the pieces of this sliding puzzle around one-at-a-time until all edges align."
+      >
+        <video
+          loading="lazy"
+          muted
+          playsinline
+          controls
+          data-src="mp4/sliding_puzzle_failure_case.mp4"
+        ></video>
+        <p class="video-title">Sliding puzzle</p>
+      </div>
+      <div class="video-wrapper" title="Unscramble this image.">
+        <video
+          loading="lazy"
+          muted
+          playsinline
+          controls
+          data-src="mp4/scrambled_puzzle_failure_case.mp4"
+        ></video>
+        <p class="video-title">Scrambled puzzle</p>
+      </div>
+      <div
+        class="video-wrapper"
+        title="A person tries to put the golf ball in the vase. Static camera, no pan, no zoom, no dolly.."
+      >
+        <video
+          loading="lazy"
+          muted
+          playsinline
+          controls
+          data-src="mp4/bottleneck_failure_case.mp4"
+        ></video>
+        <p class="video-title">Bottleneck</p>
+      </div>
+      <div
+        class="video-wrapper"
+        title="Generate a video of two metal robotic arms properly folding the t-shirt on the table."
+      >
+        <video
+          loading="lazy"
+          muted
+          playsinline
+          controls
+          data-src="mp4/laundry-folding_failure_case.mp4"
+        ></video>
+        <p class="video-title">Laundry folding</p>
+      </div>
+      <div
+        class="video-wrapper"
+        title="The red couch slides from the left room over into the right room, skillfully maneuvering to fit through the doorways without bumping into the walls. The walls are fixed: they don't shift or disappear, and no new walls are introduced. Static camera, no pan, no zoom, no dolly."
+      >
+        <video
+          loading="lazy"
+          muted
+          playsinline
+          controls
+          data-src="mp4/piano_mover_failure_case.mp4"
+        ></video>
+        <p class="video-title">Piano mover's problem</p>
+      </div>
+    </div>
+
     <div class="content-wrapper">
       <div class="citation-section">
         <h2>BibTeX</h2>
@@ -1201,8 +1434,8 @@ pattern without modification. Static camera perspective, no zoom or pan."
           <pre id="citation-text" class="citation-pre">
 @article{wiedemer2025video,
   title={Video models are zero-shot learners and reasoners},
-  author={Wiedemer, Thaddäus and Li, Yuxuan and Vicol, Paul and Gu, Shixiang Shane and Matarese, Nick and Swersky, Kevin and Kim, Been and Jaini, Priyank and Geirhos, Robert},
-  journal={arXiv preprint arXiv:TBD},
+  author={Wiedemer, Thadd{\"a}us and Li, Yuxuan and Vicol, Paul and Gu, Shixiang Shane and Matarese, Nick and Swersky, Kevin and Kim, Been and Jaini, Priyank and Geirhos, Robert},
+  journal={arXiv preprint arXiv:2509.20328},
   year={2025}
 }</pre
           >
@@ -1214,7 +1447,7 @@ pattern without modification. Static camera perspective, no zoom or pan."
 
       <script>
         function copyCitation() {
-          const citationText = document.getElementById("citation-text").innerText; // Get the citation text
+          const citationText = document.getElementById('citation-text').innerText; // Get the citation text
           if (navigator.clipboard && navigator.clipboard.writeText) {
             // Modern method using Clipboard API
             navigator.clipboard
@@ -1231,18 +1464,43 @@ pattern without modification. Static camera perspective, no zoom or pan."
 
         function fallbackCopy(text) {
           // Create a temporary textarea element
-          const textArea = document.createElement("textarea");
+          const textArea = document.createElement('textarea');
           textArea.value = text;
           document.body.appendChild(textArea);
           textArea.select();
           try {
-            document.execCommand("copy"); // Fallback to execCommand
+            document.execCommand('copy'); // Fallback to execCommand
           } catch (err) {
             // Cannot use alert()
-            console.error("Failed to copy citation.");
+            console.error('Failed to copy citation.');
           }
           document.body.removeChild(textArea); // Clean up
         }
+      </script>
+
+      <script>
+        const failureToggle = document.getElementById('failure-toggle');
+        const failureGrid = document.getElementById('failure-grid');
+        const failureArrow = document.getElementById('failure-arrow');
+        let videosLoaded = false;
+
+        failureToggle.addEventListener('click', () => {
+          const isHidden = failureGrid.style.display === 'none';
+          if (isHidden) {
+            failureGrid.style.display = 'grid';
+            failureArrow.textContent = '▼';
+            if (!videosLoaded) {
+              const videos = failureGrid.querySelectorAll('video[data-src]');
+              videos.forEach((video) => {
+                video.src = video.getAttribute('data-src');
+              });
+              videosLoaded = true;
+            }
+          } else {
+            failureGrid.style.display = 'none';
+            failureArrow.textContent = '▶';
+          }
+        });
       </script>
 
       <footer>
@@ -1252,3 +1510,4 @@ pattern without modification. Static camera perspective, no zoom or pan."
     </div>
   </body>
 </html>
+
